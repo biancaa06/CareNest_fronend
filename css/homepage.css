@@ -1,0 +1,68 @@
+/* Base styles for the body and main elements */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7fdf6; /* Soft green background */
+    color: #333;
+}
+
+/* Styles for the introduction section */
+.intro {
+    padding: 40px 20px;
+    background: #ffffff; /* White background for contrast */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading styles */
+.intro h1 {
+    font-size: 2.5rem;
+    color: #2e6b34; /* Deep green for headings */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Paragraph styles */
+.intro p {
+    font-size: 1.25rem; /* Larger text for readability */
+    margin-top: 10px;
+    color: #4f4f4f;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Styles for the main call-to-action button */
+.cta-button {
+    padding: 12px 24px;
+    background-color: #2e6b34; /* Main green color for button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1.125rem; /* Larger font size for button */
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+}
+
+/* Hover and focus states for the button */
+.cta-button:hover {
+    background-color: #255428; /* Darker green on hover */
+    transform: scale(1.05);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .intro h1 {
+        font-size: 2rem;
+    }
+
+    .intro p {
+        font-size: 1.1rem;
+    }
+}
