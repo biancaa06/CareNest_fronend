@@ -16,7 +16,7 @@
     background-color: #e6f7e6; /* Slightly darker green on focus */
 }
 
-/* Main Sign Up button styles for Patients */
+/* Main Sign In / Sign Up button styles */
 .submit-button {
     width: 100%;
     padding: 0.5rem 1rem;
@@ -27,7 +27,6 @@
     border-radius: 0.375rem; /* Rounded corners */
     text-align: center;
     cursor: pointer;
-    display: block;
     margin: 0 auto; /* Center the button */
     transition: background-color 0.3s, transform 0.2s; /* Smooth transition on hover */
     display: inline-flex;
@@ -41,7 +40,7 @@
     transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
-/* Styles for secondary sign up button for Caretakers */
+/* Styles for secondary buttons */
 .secondary-button {
     padding: 0.5rem 1rem;
     background-color: transparent;
@@ -58,7 +57,7 @@
     font-size: 1rem;
 }
 
-/* Hover and focus states for the secondary button */
+/* Hover and focus states for secondary buttons */
 .secondary-button:hover {
     background-color: #f0fdf4;
     border-color: #2e6b34;
@@ -86,4 +85,13 @@
     background-color: #e6f7e6;
     border-color: #2e6b34;
     transform: scale(1.05);
+}
+
+/* Centering the form in the middle of the page */
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 80px); /* Adjust height to allow space for the navbar */
+    margin-top: -60px; /* Optional: Adjust this if the form is too close to the navbar */
 }
