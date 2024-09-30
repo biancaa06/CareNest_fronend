@@ -1,0 +1,54 @@
+/* Reset for all elements to remove margins, padding, and ensure box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Navbar should always be at the top */
+.navbar {
+    width: 100%; /* Full width of the page */
+    background-color: #3d8b59;
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed; /* Fixed position to stick it to the top */
+    top: 0; /* Stick it to the top */
+    left: 0;
+    z-index: 1000; /* Ensure it is above other content */
+}
+
+/* Ensure the list items inside the navbar are horizontal */
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.nav-item:hover {
+    background-color: #255428;
+    border-radius: 5px;
+}
+
+/* Custom styles to complement Bootstrap and Tailwind */
+.navbar {
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.navbar-nav .nav-item {
+    padding: 0 15px;
+}
+
+.navbar-nav .nav-link {
+    padding: 10px 15px;
+}

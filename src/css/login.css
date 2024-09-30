@@ -1,46 +1,41 @@
-/* Base styles for input fields */
 .input-field {
     width: 100%;
     padding: 0.5rem 0.75rem;
-    border: 1px solid #3d8b59; /* Green border */
-    border-radius: 0.375rem; /* Rounded corners */
-    background-color: #f0fdf4; /* Light green background */
-    color: #2e6b34; /* Dark green text */
+    border: 1px solid #3d8b59;
+    border-radius: 0.375rem;
+    background-color: #f0fdf4;
+    color: #2e6b34;
     outline: none;
-    transition: background-color 0.3s, border-color 0.3s; /* Smooth transition */
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
-/* Focus state for input fields */
 .input-field:focus {
     border-color: #2e6b34;
-    background-color: #e6f7e6; /* Slightly darker green on focus */
+    background-color: #e6f7e6;
 }
 
-/* Main Sign In / Sign Up button styles */
 .submit-button {
     width: 100%;
     padding: 0.5rem 1rem;
-    background-color: #2e6b34; /* Main green background */
+    background-color: #2e6b34;
     color: white;
     font-weight: 600;
     border: none;
-    border-radius: 0.375rem; /* Rounded corners */
+    border-radius: 0.375rem;
     text-align: center;
     cursor: pointer;
-    margin: 0 auto; /* Center the button */
-    transition: background-color 0.3s, transform 0.2s; /* Smooth transition on hover */
+    margin: 0 auto;
+    transition: background-color 0.3s, transform 0.2s;
     display: inline-flex;
     align-items: center;
-    gap: 8px; /* Space between icon and text */
+    gap: 8px;
 }
 
-/* Hover and focus states for the main button */
 .submit-button:hover {
-    background-color: #255428; /* Darker green on hover */
-    transform: scale(1.05); /* Slightly enlarge on hover */
+    background-color: #255428;
+    transform: scale(1.05);
 }
 
-/* Styles for secondary buttons */
 .secondary-button {
     padding: 0.5rem 1rem;
     background-color: transparent;
@@ -57,14 +52,12 @@
     font-size: 1rem;
 }
 
-/* Hover and focus states for secondary buttons */
 .secondary-button:hover {
     background-color: #f0fdf4;
     border-color: #2e6b34;
     transform: scale(1.05);
 }
 
-/* Back to homepage button styles */
 .back-home-button {
     display: inline-flex;
     align-items: center;
@@ -80,18 +73,20 @@
     transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
 }
 
-/* Hover and focus states for the back to homepage button */
 .back-home-button:hover {
     background-color: #e6f7e6;
     border-color: #2e6b34;
     transform: scale(1.05);
 }
 
-/* Centering the form in the middle of the page */
 .center-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: calc(100vh - 80px); /* Adjust height to allow space for the navbar */
-    margin-top: -60px; /* Optional: Adjust this if the form is too close to the navbar */
+    height: calc(100vh - 80px);
+    margin-top: -60px;
+}
+
+.login-container {
+    transition: transform 0.2s ease-in-out;
 }
