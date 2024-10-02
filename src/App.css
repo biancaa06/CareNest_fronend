@@ -1,8 +1,13 @@
+html, body, #root {
+  height: 100%; /* Ensure the full height of the viewport is used */
+  margin: 0;
+  padding: 0;
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%; /* Full width */
+  display: flex;
+  flex-direction: column; /* Ensure child components stack vertically */
 }
 
 .logo {

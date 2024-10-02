@@ -3,7 +3,7 @@ import '../css/navbar.css';
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-green-600 text-white fixed top-0 left-0 w-full shadow-lg">
+    <nav className="navbar navbar-expand-lg bg-green-600 text-white w-full shadow-lg">
       <div className="container-fluid flex justify-between items-center">
         <a href="/" className="navbar-brand">
           <img
@@ -18,11 +18,6 @@ const Navbar = () => {
             <li className="nav-item">
               <a className="nav-link text-white font-bold" href="/">
                 <i className="fas fa-home"></i> Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link text-white font-bold" href="/services">
-                <i className="fas fa-hand-holding-medical"></i> Services
               </a>
             </li>
             <li className="nav-item">
