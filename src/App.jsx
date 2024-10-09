@@ -7,7 +7,6 @@ import Login from './pages/LogInPage';
 import SignUp from './pages/SignUpPage';
 import AnnouncementsPage from './pages/AnnouncementsPage';
 import AnnouncementBodyPage from './pages/AnnouncementBodyPage';
-import PostAnnouncementPage from './pages/PostAnnouncementPage';
 
 function App() {
   return (

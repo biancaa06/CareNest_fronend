@@ -1,11 +1,11 @@
-import axios from "axios";
+import api from "../../api.config";
 
-function getAllAnnouncements(){
-    return axios.get('http://localhost:8080/announcements');
+function getAllAnnouncements() {
+    return api.get('/announcements');
 }
 
 function getAnnouncementById(id) {
-    return axios.get(`http://localhost:8080/announcements/id:${id}`);
+    return api.get(`/announcements/id:${id}`);
 }
 
 
