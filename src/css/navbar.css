@@ -13,7 +13,7 @@
     align-items: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    position: relative; /* Ensure it's not fixed, allowing the navbar to scroll with the page */
+    position: relative;
 }
 
 .nav-list {
@@ -28,8 +28,8 @@
     color: white;
     text-decoration: none;
     font-weight: bold;
-    padding: 10px 15px; /* Add some horizontal padding for better clickability */
-    transition: background-color 0.3s ease; /* Smooth transition for hover effects */
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
 }
 
 .nav-item:hover {
@@ -41,21 +41,21 @@
     height: 60px;
     width: auto;
     border-radius: 50%;
-    margin-right: 20px; /* Adjust spacing between the logo and the nav items */
+    margin-right: 20px;
 }
 
 @media (max-width: 768px) {
     .nav-list {
         flex-direction: column;
-        gap: 10px; /* Stack the nav items vertically on smaller screens */
+        gap: 10px;
     }
 
     .navbar {
         flex-direction: column;
-        align-items: flex-start; /* Align the logo and items to the left on mobile */
+        align-items: flex-start;
     }
 
     .navbar-logo {
-        margin-bottom: 10px; /* Add some spacing between the logo and the nav items */
+        margin-bottom: 10px;
     }
 }

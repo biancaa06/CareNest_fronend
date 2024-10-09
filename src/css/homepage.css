@@ -1,11 +1,11 @@
 .homepage-container {
-    flex-grow: 1; /* Allow the homepage to grow and fill available space */
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #f0fdf4;
     width: 100%;
-    height: 100%; /* Full height of the parent */
+    height: 100%;
   }
   
 .intro-section {

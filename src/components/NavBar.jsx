@@ -1,11 +1,10 @@
 import React from 'react';
-import '../css/navbar.css';
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg bg-green-600 text-white w-full shadow-lg">
-      <div className="container-fluid flex justify-between items-center">
-        <a href="/" className="navbar-brand">
+    <nav className="bg-green-600 text-white shadow-lg z-50 w-full">
+      <div className="container mx-auto flex justify-between items-center p-4">
+        <a href="/" className="flex items-center">
           <img
             src="/images/carenest_logo.png"
             alt="CareNest Logo"
@@ -13,31 +12,21 @@ const Navbar = () => {
           />
         </a>
 
-        <div className="collapse navbar-collapse justify-center" id="navbarNav">
-          <ul className="navbar-nav gap-4">
-            <li className="nav-item">
-              <a className="nav-link text-white font-bold" href="/">
-                <i className="fas fa-home"></i> Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link text-white font-bold" href="/announcements">
-                <i className="fas fa-bullhorn"></i> Announcements
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link text-white font-bold" href="/caretaker">
-                <i className="fas fa-user-nurse"></i> Caretakers
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        <div className="navbar-login">
-          <a className="nav-link text-white font-bold" href="/login">
-            <i className="fas fa-sign-in-alt"></i> Login
+        <div className="flex items-center space-x-4">
+          <a href="/" className="text-white font-bold hover:bg-green-700 px-4 py-2 rounded">
+            <i className="fas fa-home"></i> Home
+          </a>
+          <a href="/announcements" className="text-white font-bold hover:bg-green-700 px-4 py-2 rounded">
+            <i className="fas fa-bullhorn"></i> Announcements
+          </a>
+          <a href="/caretaker" className="text-white font-bold hover:bg-green-700 px-4 py-2 rounded">
+            <i className="fas fa-user-nurse"></i> Caretakers
           </a>
         </div>
+
+        <a href="/login" className="text-white font-bold hover:bg-green-700 px-4 py-2 rounded">
+          <i className="fas fa-sign-in-alt"></i> Login
+        </a>
       </div>
     </nav>
   );

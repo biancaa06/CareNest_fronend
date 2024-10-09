@@ -1,69 +1,35 @@
 import { useState, useEffect } from "react";
 import AnnouncementList from "../components/AnnouncementList";
-import Navbar from "../components/NavBar";
 import '../css/AnnouncementsPage.css';
+import { getAllAnnouncements } from "../services/AnnouncementsRepository";
 
 const AnnouncementsPage = () => {
     const [announcements, setAnnouncements] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchAnnouncements = () => {
-            const announcementsList = [
-                {
-                    id: "1",
-                    title: "Health Tips for Elderly",
-                    description: "Here are some essential tips for staying healthy during flu season.",
-                    date: "March 16, 2024",
-                    author: {
-                        name: "Dr. John Smith",
-                        role: "Medical Expert",
-                        imageUrl: "https://via.placeholder.com/40"
-                    }
-                },
-                {
-                    id: "2",
-                    title: "Mental Health Awareness",
-                    description: "Join us for a session on managing mental health for seniors.",
-                    date: "March 12, 2024",
-                    author: {
-                        name: "Dr. Emma Brown",
-                        role: "Psychologist",
-                        imageUrl: "https://via.placeholder.com/40"
-                    }
-                },
-                {
-                    id: "2",
-                    title: "Mental Health Awareness",
-                    description: "Join us for a session on managing mental health for seniors.",
-                    date: "March 12, 2024",
-                    author: {
-                        name: "Dr. Emma Brown",
-                        role: "Psychologist",
-                        imageUrl: "https://via.placeholder.com/40"
-                    }
-                },
-                {
-                    id: "2",
-                    title: "Mental Health Awareness",
-                    description: "Join us for a session on managing mental health for seniors.",
-                    date: "March 12, 2024",
-                    author: {
-                        name: "Dr. Emma Brown",
-                        role: "Psychologist",
-                        imageUrl: "https://via.placeholder.com/40"
-                    }
-                }
-            ];
-            setAnnouncements(announcementsList);
+        const fetchAnnouncements = async () => {
+            try {
+                const response = await getAllAnnouncements();
+                setAnnouncements(response.data);
+            } catch (err) {
+                setError('Failed to fetch announcements');
+            } finally {
+                setLoading(false);
+            }
         };
 
         fetchAnnouncements();
     }, []);
 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+
     return (
         <div>
             <div className="announcements_container">
-                <h1 className="text-4xl font-bold text-center text-green-700 mb-10">Health Announcements</h1>
+                <h1 className="text-5xl font-bold text-center text-green-700 mb-10">Health Announcements</h1>
                 <AnnouncementList announcements={announcements} />
             </div>
         </div>
