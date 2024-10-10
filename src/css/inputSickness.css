@@ -1,0 +1,58 @@
+.input-sickness-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.sickness-form {
+    width: 100%;
+    max-width: 58rem;
+}
+
+.sickness-label {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #111827;
+    visibility: hidden;
+}
+
+.sickness-input-container {
+    position: relative;
+}
+
+.sickness-input {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    padding-right: 2.5rem;
+    font-size: 0.875rem;
+    color: #111827;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    background-color: #f9fafb;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.sickness-submit {
+    position: absolute;
+    right: 0.625rem;
+    bottom: 0.625rem;
+    background-color: #1d4ed8;
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.sickness-submit:hover {
+    background-color: #1e40af;
+}
+
+.sickness-submit:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}

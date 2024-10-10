@@ -8,18 +8,18 @@ const AnnouncementsPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchAnnouncements = async () => {
-            try {
-                const response = await getAllAnnouncements();
-                setAnnouncements(response.data);
-            } catch (err) {
-                setError('Failed to fetch announcements');
-            } finally {
-                setLoading(false);
-            }
-        };
+    const fetchAnnouncements = async () => {
+        try {
+            const response = await getAllAnnouncements();
+            setAnnouncements(response.data);
+        } catch (err) {
+            setError('Failed to fetch announcements');
+        } finally {
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         fetchAnnouncements();
     }, []);
 
