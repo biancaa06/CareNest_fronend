@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../css/inputSickness.css";
+import "../../css/inputSickness.css";
 
 function InputSickness({ createSickness }) {
     const [sicknessName, setSicknessName] = useState("");

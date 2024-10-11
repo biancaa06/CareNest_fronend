@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import AnnouncementList from "../components/AnnouncementList";
+import AnnouncementList from "../components/Announcements/AnnouncementList";
 import '../css/AnnouncementsPage.css';
 import { getAllAnnouncements } from "../services/AnnouncementsRepository";
 

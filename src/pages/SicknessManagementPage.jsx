@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createSickness, getAllSicknesses, deleteSickness, updateSicknessById } from "../services/SicknessRepository";
-import SicknessesList from "../components/SicknessesList";
-import InputSickness from "../components/InputSickness";
+import SicknessesList from "../components/Sickness/SicknessesList";
+import InputSickness from "../components/Sickness/InputSickness";
 import "../css/sicknessPage.css";
 
 function SicknessManagementPage() {

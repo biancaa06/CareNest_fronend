@@ -11,7 +11,7 @@ const Homepage = () => {
         <p className="intro-text text-lg text-gray-600 mb-8">
           Connecting caregivers with those in need of care. Explore services, read announcements, and start your journey towards better health today.
         </p>
-        <a href="/services" className="btn btn-success btn-lg">
+        <a href="/login" className="btn btn-success btn-lg">
           <i className="fas fa-stethoscope"></i> Explore Services
         </a>
       </section>

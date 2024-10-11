@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ConfirmationModal from "./ModalActionConfirmation";
+import ConfirmationModal from "../ModalActionConfirmation";
 
 function DeleteSicknessButton({ sickness, deleteSicknessById }) {
 
