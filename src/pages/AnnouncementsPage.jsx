@@ -23,8 +23,18 @@ const AnnouncementsPage = () => {
         fetchAnnouncements();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
+    if (loading) return(
+        <div className="announcements_container">
+            <h1 className="text-5xl font-bold text-center text-green-700 mb-10">Health Announcements</h1>
+            <p>Loading...</p>
+        </div>
+    )
+    if (error) return(
+        <div className="announcements_container">
+            <h1 className="text-5xl font-bold text-center text-green-700 mb-10">Health Announcements</h1>
+            <p>{error}</p>
+        </div>
+    ) 
 
     return (
         <div>

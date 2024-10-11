@@ -5,15 +5,20 @@ function getAllSicknesses(){
 }
 
 function getSicknessById(id){
-    return api.get(`/id:${id}`);
+    return api.get(`/sickness/id:${id}`);
 }
 
 function createSickness(name) {
     return api.post('/sickness', name);
 }
 
+function deleteSickness(id){
+    return api.delete(`/sickness/${id}`);
+}
+
 export{
     getAllSicknesses,
     getSicknessById,
-    createSickness
+    createSickness,
+    deleteSickness
 }

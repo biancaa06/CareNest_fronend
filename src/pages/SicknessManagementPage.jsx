@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createSickness, getAllSicknesses } from "../services/SicknessRepository";
+import { createSickness, getAllSicknesses, deleteSickness } from "../services/SicknessRepository";
 import SicknessesList from "../components/SicknessesList";
 import InputSickness from "../components/InputSickness";
 import "../css/sicknessPage.css";
@@ -31,9 +31,29 @@ function SicknessManagementPage() {
             fetchSicknesses();
         });
     };
+    
+    function deleteSicknessById(id){
+        deleteSickness(id).then(() => {
+            fetchSicknesses();
+        })
+    }
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
+     function updateSickness(sickness){
+        
+    }
+
+    if (loading) return (
+        <div className="sickness-management-container">
+            <h1 className="page-title">Saved Sicknesses</h1>
+            <p>Loading...</p>
+        </div>
+    )
+    if (error) return(
+        <div className="sickness-management-container">
+            <h1 className="page-title">Saved Sicknesses</h1>
+            <p>{error}</p>
+        </div>
+    )
 
     return (
         <div className="sickness-management-container">
@@ -41,7 +61,7 @@ function SicknessManagementPage() {
             
             <div className="input-and-list-container">
                 <InputSickness createSickness={addSickness} />
-                <SicknessesList sicknesses={sicknesses} />
+                <SicknessesList sicknesses={sicknesses} deleteSickness={deleteSicknessById} updateSickness={updateSickness}/>
             </div>
         </div>
     );

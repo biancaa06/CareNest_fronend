@@ -1,7 +1,7 @@
 import React from "react"
 import SicknessItem from "./SicknessItem";
 
-const SicknessesList = ({sicknesses}) =>{
+const SicknessesList = ({sicknesses, deleteSickness, updateSickness}) =>{
     return (
         <>
             <ul className="space-y-4">
@@ -9,7 +9,7 @@ const SicknessesList = ({sicknesses}) =>{
                     sicknesses && sicknesses.length > 0 ? (
                         sicknesses.map((sickness) =>(
                             <div key={sickness.id}>
-                                <SicknessItem key={sickness.id} sickness={sickness}/>
+                                <SicknessItem key={sickness.id} sickness={sickness} deleteSickness={deleteSickness} updateSickness={updateSickness}/>
                             </div>
                         ))
                     ) : (
