@@ -16,9 +16,14 @@ function deleteSickness(id){
     return api.delete(`/sickness/${id}`);
 }
 
+function updateSicknessById(id, newSicknessName){
+    return api.put(`/sickness/id:${id}`,newSicknessName);
+}
+
 export{
     getAllSicknesses,
     getSicknessById,
     createSickness,
-    deleteSickness
+    deleteSickness,
+    updateSicknessById
 }

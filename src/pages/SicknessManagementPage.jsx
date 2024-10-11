@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createSickness, getAllSicknesses, deleteSickness } from "../services/SicknessRepository";
+import { createSickness, getAllSicknesses, deleteSickness, updateSicknessById } from "../services/SicknessRepository";
 import SicknessesList from "../components/SicknessesList";
 import InputSickness from "../components/InputSickness";
 import "../css/sicknessPage.css";
@@ -38,8 +38,10 @@ function SicknessManagementPage() {
         })
     }
 
-     function updateSickness(sickness){
-        
+    function updateSickness(id,newSickness){
+        updateSicknessById(id, newSickness).then(() =>{
+            fetchSicknesses();
+        })
     }
 
     if (loading) return (
