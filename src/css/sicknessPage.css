@@ -1,0 +1,23 @@
+.sickness-management-container {
+    background-color: #f0fdf4;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    color: #2e6b34;
+    margin-bottom: 40px;
+}
+
+.input-and-list-container {
+    width: 100%;
+    max-width:70rem;
+    margin: 0 auto;
+    background-color: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
