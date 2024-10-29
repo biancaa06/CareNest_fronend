@@ -18,9 +18,6 @@ function AnnouncementComponent ({ announcement }){
                     className="mb-2 text-xl font-medium text-neutral-800 dark:text-neutral-50">
                         {announcement.title}
                     </h5>
-                    <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-                        {announcement.description}
-                    </p>
                     <p className="text-xs text-neutral-500 dark:text-neutral-300">
                         {new Date(announcement.date).toLocaleDateString()}
                     </p>

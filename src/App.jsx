@@ -7,6 +7,7 @@ import Login from './pages/LogInPage';
 import SignUp from './pages/SignUpPage';
 import AnnouncementsPage from './pages/AnnouncementsPage';
 import AnnouncementBodyPage from './pages/AnnouncementBodyPage';
+import SicknessManagementPage from './pages/SicknessManagementPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/announcements" element={<AnnouncementsPage />} />
           <Route path="/announcements/:id" element={<AnnouncementBodyPage />}/>
+          <Route path="/sicknesses" element={<SicknessManagementPage />}></Route>
         </Routes>
       </Router>
     </div>
