@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createBaseUser } from "../../services/UserRepository";
 
-function RegisterBaseUserForm({ handleBaseUserCreated, handleContinueAsPatient}) {
+function RegisterBaseUserForm({ handleBaseUserCreated, handleContinueAsPatient, handleContinueAsCaretaker}) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -10,13 +10,25 @@ function RegisterBaseUserForm({ handleBaseUserCreated, handleContinueAsPatient})
     const [password, setPassword] = useState("");
     const [confirmedPassword, setConfirmedPassword] = useState("");
 
-    const [errors, setErrors] = useState({}); // For storing validation errors
+    const [createPatient, setCreatePatient] = useState(false);
+    const [createCaretaker, setCreateCaretaker] = useState(false);
+
+    const [errors, setErrors] = useState({});
 
     const genders = [
         { id: 1, name: "MALE" },
         { id: 2, name: "FEMALE" },
         { id: 3, name: "OTHER" }
     ];
+
+    const handlePatientAccountCreation = () =>{
+        setCreatePatient(true);
+        setCreateCaretaker(false);
+    }
+    const handleCaretakerAccountCreation = () =>{
+        setCreateCaretaker(true);
+        setCreatePatient(false);
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +42,12 @@ function RegisterBaseUserForm({ handleBaseUserCreated, handleContinueAsPatient})
                 password
             });
             handleBaseUserCreated(response.data.id);
-            handleContinueAsPatient(true);
+
+            if (createPatient) {
+                handleContinueAsPatient(true);
+            } else if (createCaretaker) {
+                handleContinueAsCaretaker(true);
+            }
 
         } catch (error) {
             setErrors({ general: error.response.data.detail });
@@ -157,8 +174,16 @@ function RegisterBaseUserForm({ handleBaseUserCreated, handleContinueAsPatient})
                     </div>
                 </div>
 
-                <button type="submit" className="btn btn-success w-full mt-6 submit-button">
+                <button type="submit" className="btn btn-success w-full mt-4 submit-button"
+                    onClick={handlePatientAccountCreation}
+                >
                     <i className="fas fa-user-plus"></i> Sign Up as Patient
+                </button>
+
+                <button type="submit" className="btn btn-outline-success w-full mt-4 secondary-button"
+                    onClick={handleCaretakerAccountCreation}
+                >
+                    <i className="fas fa-user-nurse"></i> Sign Up as Caretaker
                 </button>
             </form>
             <div className="text-center mt-4">
