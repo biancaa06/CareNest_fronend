@@ -44,16 +44,11 @@ function CaretakerSignUp({ baseUserId, handleSuccessfulCreation }) {
         }
 
         try {
-            console.log(baseUserId);
-            console.log(personalDescription);
-            console.log(salary);
-            console.log(availability);
-            console.log(selectedSicknesses);
             await createCaretakerAccount({
                 baseUserId,
                 personalDescription,
                 salaryPerHour: parseFloat(salary),
-                availabilityId: availability, // Renamed to match the expected argument
+                availabilityId: availability,
                 specialisations: selectedSicknesses.map(s => s.id)
             });
             handleSuccessfulCreation();

@@ -4,7 +4,7 @@ import '../css/login.css';
 
 const Login = () => {
   return (
-    <div className="min-h-screen d-flex align-items-center justify-content-center bg-green-50">
+    <div className="page-background">
       <div className="login-container bg-white shadow-md rounded-lg p-5 max-w-md w-full">
         <h2 className="text-center mb-4 text-green-700">Login to CareNest</h2>
         <form>

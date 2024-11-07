@@ -32,7 +32,7 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center bg-green-50 pt-5">
+      <div className="page-background">
         <div className="signup-container bg-white shadow-md rounded-lg p-5 max-w-md w-full">
         {continueAsPatient ? (
             <PatientSignUp baseUserId={baseUserId} handleSuccessfulCreation={handleSuccessfulCreation} />
