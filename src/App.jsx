@@ -8,6 +8,9 @@ import SignUp from './pages/SignUpPage';
 import AnnouncementsPage from './pages/AnnouncementsPage';
 import AnnouncementBodyPage from './pages/AnnouncementBodyPage';
 import SicknessManagementPage from './pages/SicknessManagementPage';
+import ManagersManagementPage from './pages/ManagersManagementPage';
+import CaretakerSignUp from './components/SignUp/CaretakerSignUp';
+import CaretakersPage from './pages/CaretakersPage';
 
 function App() {
   return (
@@ -21,6 +24,8 @@ function App() {
           <Route path="/announcements" element={<AnnouncementsPage />} />
           <Route path="/announcements/:id" element={<AnnouncementBodyPage />}/>
           <Route path="/sicknesses" element={<SicknessManagementPage />}></Route>
+          <Route path="/managersManagement" element={<ManagersManagementPage />}></Route>
+          <Route path="/caretakers" element={<CaretakersPage />}></Route>
         </Routes>
       </Router>
     </div>

@@ -1,13 +1,13 @@
 .min-h-screen {
     min-height: 100vh;
-    background-color: #f0fdf4; /* Match the background color of the homepage */
+    background-color: #f0fdf4;
 }
 
 .login-container {
-    background-color: white; /* Match the intro-section of the homepage */
-    padding: 30px; /* Match the padding of the intro-section */
-    border-radius: 8px; /* Same border radius as the homepage sections */
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Similar shadow to homepage sections */
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     max-width: 700px;
     width: 100%;
     transition: transform 0.2s ease-in-out;
