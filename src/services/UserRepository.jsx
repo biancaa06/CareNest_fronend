@@ -12,8 +12,17 @@ function updateBaseUserAddress({country, city, street, number, id}){
     return api.put(`/baseUser/updateAddress/${id}`, {country, city, street, number});
 }
 
+function uploadProfilePicture({userId, file}){
+    return api.put(`/baseUser/${userId}/image-upload`, file, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+}
+
 export{
     createBaseUser,
     getBaseUserById,
-    updateBaseUserAddress
+    updateBaseUserAddress,
+    uploadProfilePicture
 }

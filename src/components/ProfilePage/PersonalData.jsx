@@ -1,32 +1,60 @@
 import { useState, useEffect } from "react";
-import { updateBaseUserAddress } from "../../services/UserRepository";
+import { updateBaseUserAddress, uploadProfilePicture } from "../../services/UserRepository";
 
 function PersonalData({ user }) {
     const [isEditing, setIsEditing] = useState(false);
-
-    const profileImageSrc = user?.profileImage
-        ? `data:image/jpeg;base64,${user.profileImage}`
-        : null;
-
     const [street, setStreet] = useState(user?.address?.street || "");
     const [number, setNumber] = useState(user?.address?.number || "");
     const [city, setCity] = useState(user?.address?.city || "");
     const [country, setCountry] = useState(user?.address?.country || "");
-    const [profilePicture, setProfilePicture] = useState(profileImageSrc);
+    
+    const [profilePicture, setProfilePicture] = useState(null);
+    const [uploadedPicture, setUploadedPicture] = useState(null);
+
     const [error, setError] = useState("");
 
     useEffect(() => {
+        if (user?.profileImage) {
+            const base64Image = user.profileImage.startsWith("data:image/")
+                ? user.profileImage
+                : `data:image/jpeg;base64,${user.profileImage}`;
+            setProfilePicture(base64Image);
+        } else {
+            setProfilePicture(null);
+        }
+
         if (user?.address) {
             setStreet(user.address.street);
             setNumber(user.address.number);
             setCity(user.address.city);
             setCountry(user.address.country);
         }
-        if (user?.profileImage) {
-            setProfilePicture(profileImageSrc);
-        }
-    }, [user, profileImageSrc]);
+    }, [user]);
 
+    const handleFileChange = (e) => {
+        e.preventDefault();
+        setUploadedPicture(e.target.files[0]);
+    };
+
+    const handleProfilePictureSave = async () => {
+        if (!uploadedPicture) return;
+
+        try {
+            const formData = new FormData();
+            formData.append("file", uploadedPicture);
+
+            await uploadProfilePicture({ userId: user.id, file: formData });
+
+            const newImageUrl = URL.createObjectURL(uploadedPicture);
+            setProfilePicture(newImageUrl);
+            setUploadedPicture(null);
+        } catch (error) {
+            console.error("Error uploading profile picture", error);
+            setError("Error uploading profile picture");
+        }
+    };
+
+    // Personal data save function
     const handleSave = async () => {
         setError("");
         try {
@@ -45,7 +73,7 @@ function PersonalData({ user }) {
     }
 
     return (
-        <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6 mt-10 text-gray-700">
+        <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg px-20 py-6 mt-10 text-gray-700">
             <div className="flex flex-col items-center mb-6">
                 {profilePicture ? (
                     <img
@@ -58,10 +86,25 @@ function PersonalData({ user }) {
                         {user.firstName?.[0]}{user.lastName?.[0]}
                     </div>
                 )}
-                <h2 className="text-2xl font-bold text-green-700 mt-4">
-                    {user.firstName} {user.lastName}
-                </h2>
+                <h2 className="text-2xl font-bold text-green-700 mt-4">{user.firstName} {user.lastName}</h2>
                 <p className="text-gray-500">{user.gender}</p>
+            </div>
+
+            <div className="flex items-center space-x-4">
+                <input
+                    className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    aria-describedby="file_input_help"
+                    id="file_input"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                />
+                <button
+                    onClick={handleProfilePictureSave}
+                    className="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition duration-200"
+                >
+                    Save Picture
+                </button>
             </div>
 
             <div className="border-t border-gray-200 pt-4">

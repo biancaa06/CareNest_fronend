@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 function CaretakerCard({ caretaker }) {
 
-    const [profilePicture, setProfilePicture] = useState(caretaker.profileImage);
+    const [profilePicture, setProfilePicture] = useState(null);
 
     useEffect(() => {
         if (caretaker?.baseUser?.profileImage) {
