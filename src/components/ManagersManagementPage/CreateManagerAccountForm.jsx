@@ -31,12 +31,10 @@ function CreateManagerAccountForm({positions}) {
             password
         })
         .then(response => {
-            // Proceed with creating the manager account
             return createManagerAccount({ baseUserId: response.data.id, position });
         })
         .then(managerResponse => {
             console.log("Manager account created successfully", managerResponse.data);
-            //!!!! make function to send email with temporart password
         })
         .catch(error => {
             const errorMessage = error.response?.data || "An unexpected error occurred.";
