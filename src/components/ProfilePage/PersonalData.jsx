@@ -4,12 +4,15 @@ import { updateBaseUserAddress } from "../../services/UserRepository";
 function PersonalData({ user }) {
     const [isEditing, setIsEditing] = useState(false);
 
-    // Local state for address fields
+    const profileImageSrc = user?.profileImage
+        ? `data:image/jpeg;base64,${user.profileImage}`
+        : null;
+
     const [street, setStreet] = useState(user?.address?.street || "");
     const [number, setNumber] = useState(user?.address?.number || "");
     const [city, setCity] = useState(user?.address?.city || "");
     const [country, setCountry] = useState(user?.address?.country || "");
-
+    const [profilePicture, setProfilePicture] = useState(profileImageSrc);
     const [error, setError] = useState("");
 
     useEffect(() => {
@@ -19,7 +22,10 @@ function PersonalData({ user }) {
             setCity(user.address.city);
             setCountry(user.address.country);
         }
-    }, [user]);
+        if (user?.profileImage) {
+            setProfilePicture(profileImageSrc);
+        }
+    }, [user, profileImageSrc]);
 
     const handleSave = async () => {
         setError("");
@@ -41,15 +47,15 @@ function PersonalData({ user }) {
     return (
         <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg p-6 mt-10 text-gray-700">
             <div className="flex flex-col items-center mb-6">
-                {user.profilePicture ? (
+                {profilePicture ? (
                     <img
-                        src={user.profilePicture}
+                        src={profilePicture}
                         alt="Profile"
                         className="w-24 h-24 rounded-full object-cover"
                     />
                 ) : (
                     <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center text-3xl font-semibold text-green-700">
-                        {user.firstName[0]}{user.lastName[0]}
+                        {user.firstName?.[0]}{user.lastName?.[0]}
                     </div>
                 )}
                 <h2 className="text-2xl font-bold text-green-700 mt-4">
