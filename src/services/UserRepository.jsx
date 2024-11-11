@@ -4,6 +4,25 @@ function createBaseUser({firstName, lastName, email, phoneNumber, gender, passwo
     return api.post('/baseUser',{firstName, lastName, email, phoneNumber, gender, password});
 }
 
+function getBaseUserById(id){
+    return api.get(`/baseUser/${id}`);
+}
+
+function updateBaseUserAddress({country, city, street, number, id}){
+    return api.put(`/baseUser/updateAddress/${id}`, {country, city, street, number});
+}
+
+function uploadProfilePicture({userId, file}){
+    return api.put(`/baseUser/${userId}/image-upload`, file, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+}
+
 export{
-    createBaseUser
+    createBaseUser,
+    getBaseUserById,
+    updateBaseUserAddress,
+    uploadProfilePicture
 }

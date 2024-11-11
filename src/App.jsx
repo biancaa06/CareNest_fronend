@@ -11,6 +11,7 @@ import SicknessManagementPage from './pages/SicknessManagementPage';
 import ManagersManagementPage from './pages/ManagersManagementPage';
 import CaretakerSignUp from './components/SignUp/CaretakerSignUp';
 import CaretakersPage from './pages/CaretakersPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/sicknesses" element={<SicknessManagementPage />}></Route>
           <Route path="/managersManagement" element={<ManagersManagementPage />}></Route>
           <Route path="/caretakers" element={<CaretakersPage />}></Route>
+          <Route path="/profile/:id" element={<ProfilePage />}></Route>
         </Routes>
       </Router>
     </div>
