@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { getAllSicknesses } from "../../services/SicknessRepository";
 import { createCaretakerAccount } from "../../services/CaretakerRepository";
+import { DevTool } from "@hookform/devtools";
+import { useForm } from "react-hook-form";
 
 function CaretakerSignUp({ baseUserId, handleSuccessfulCreation }) {
+    const { register, control, handleSubmit, formState: { errors } } = useForm();
+    
     const [sicknesses, setSicknesses] = useState([]);
     const [personalDescription, setPersonalDescription] = useState("");
     const [salary, setSalary] = useState(0);
@@ -34,21 +38,20 @@ function CaretakerSignUp({ baseUserId, handleSuccessfulCreation }) {
         setSelectedSicknesses(selectedSicknesses.filter((s) => s.id !== sicknessId));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const onSubmit = async (data) => {
         setError(null);
 
-        if (!personalDescription || selectedSicknesses.length === 0 || !availability) {
-            setError("Please provide valid data.");
+        if (selectedSicknesses.length === 0) {
+            setError("At least one specialisation is required.");
             return;
         }
 
         try {
             await createCaretakerAccount({
                 baseUserId,
-                personalDescription,
-                salaryPerHour: parseFloat(salary),
-                availabilityId: availability,
+                personalDescription : data.personalDescription,
+                salaryPerHour: parseFloat(data.salary),
+                availabilityId: data.availability,
                 specialisations: selectedSicknesses.map(s => s.id)
             });
             handleSuccessfulCreation();
@@ -65,7 +68,7 @@ function CaretakerSignUp({ baseUserId, handleSuccessfulCreation }) {
 
             {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
             
-            <form onSubmit={handleSubmit} >
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="mb-4">
                     <label htmlFor="description" className="form-label text-lg text-gray-700 font-semibold mb-2">
                         Personal Description
@@ -75,10 +78,15 @@ function CaretakerSignUp({ baseUserId, handleSuccessfulCreation }) {
                         id="description"
                         placeholder="Write something about you..."
                         className="w-full input-field"
-                        value={personalDescription}
-                        onChange={(e) => setPersonalDescription(e.target.value)}
-                        required
+                        {...register("personalDescription", { 
+                            required: "Personal description is required", 
+                            maxLength: {
+                                value: 500,
+                                message: "Personal description cannot exceed 500 characters"
+                            } 
+                        })}
                     />
+                    {errors.personalDescription && <p className="text-red-500 text-sm">{errors.personalDescription.message}</p>}
                 </div>
 
                 <div className="mb-4">
@@ -90,13 +98,22 @@ function CaretakerSignUp({ baseUserId, handleSuccessfulCreation }) {
                         id="salary"
                         placeholder="Enter your hourly salary"
                         className="w-full input-field"
-                        value={salary}
-                        onChange={(e) => setSalary(e.target.value)}
+                        {...register("salary", { 
+                            required: "Salary value is required" ,
+                            min:{
+                                value: 0,
+                                message: "Salary must be between 0 and 100"
+                            },
+                            max: {
+                                value:100,
+                                message: "alary must be between 0 and 100"
+                            }
+                        })}
                         step="0.01"
                         min="0"
                         pattern="^\d+(\.\d{1,2})?$"
-                        required
                     />
+                    {errors.salary && <p className="text-red-500 text-sm">{errors.salary.message}</p>}
                 </div>
 
                 <div>
@@ -106,9 +123,8 @@ function CaretakerSignUp({ baseUserId, handleSuccessfulCreation }) {
                     <select
                         id="availability"
                         className="form-control input-field"
-                        value={availability}
-                        onChange={(e) => setAvailability(e.target.value)}
-                        required
+                        
+                        {...register("availability", { required: "Availability required" })}
                     >
                         <option value="">Select your availability</option>
                         {availabilityTypes.map((a) => (
@@ -117,6 +133,7 @@ function CaretakerSignUp({ baseUserId, handleSuccessfulCreation }) {
                             </option>
                         ))}
                     </select>
+                    {errors.availability && <p className="text-red-500 text-sm">{errors.availability.message}</p>}
                 </div>
 
                 <div className="mb-4">
@@ -173,6 +190,7 @@ function CaretakerSignUp({ baseUserId, handleSuccessfulCreation }) {
                     Sign Up
                 </button>
             </form>
+            <DevTool control={control} />
         </div>
         </>
     )
