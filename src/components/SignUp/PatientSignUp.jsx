@@ -2,19 +2,21 @@ import React, { useState, useEffect } from "react";
 import '../../css/signup.css';
 import { getAllSicknesses } from "../../services/SicknessRepository";
 import { createPatientAccount } from "../../services/PatientRepository";
+import { useForm } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
 
 function PatientSignUp({ baseUserId, handleSuccessfulCreation }) {
+
+    const { register, control, handleSubmit, formState: { errors } } = useForm();
     const [sicknesses, setSicknesses] = useState([]);
-    const [personalDescription, setPersonalDescription] = useState("");
     const [selectedSicknesses, setSelectedSicknesses] = useState([]);
     const [error, setError] = useState(""); 
 
-    const fetchSicknesses = async () => {
-        const response = await getAllSicknesses();
-        setSicknesses(response.data);
-    };
-
     useEffect(() => {
+        const fetchSicknesses = async () => {
+            const response = await getAllSicknesses();
+            setSicknesses(response.data);
+        };
         fetchSicknesses();
     }, []);
 
@@ -28,31 +30,31 @@ function PatientSignUp({ baseUserId, handleSuccessfulCreation }) {
         setSelectedSicknesses(selectedSicknesses.filter((s) => s.id !== sicknessId));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const onSubmit = async (data) => {
         setError(null);
 
-        if (!personalDescription || selectedSicknesses.length === 0) {
-            setError("Please provide a personal description and select at least one sickness.");
+        if (selectedSicknesses.length === 0) {
+            setError("Please select at least one sickness.");
             return;
         }
 
+        console.log(data);
         try {
             await createPatientAccount({
                 baseUserId,
-                personalDescription,
+                personalDescription: data.personalDescription,
                 sicknesses: selectedSicknesses.map(s => s.id)
             });
             handleSuccessfulCreation();
         } catch (err) {
-            setError(err.response.data.detail);
+            setError(err.response?.data?.detail || "An error occurred");
         }
     };
 
     return (
         <div className="signup-container">
             <h2 className="text-2xl font-bold text-center text-green-700 mb-6">Sign Up as Patient</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4">
                     <label htmlFor="description" className="form-label text-lg text-gray-700 font-semibold mb-2">
                         Personal Description
@@ -62,10 +64,15 @@ function PatientSignUp({ baseUserId, handleSuccessfulCreation }) {
                         id="description"
                         placeholder="Write something about you..."
                         className="w-full input-field"
-                        value={personalDescription}
-                        onChange={(e) => setPersonalDescription(e.target.value)}
-                        required
+                        {...register("personalDescription", { 
+                            required: "Personal description is required", 
+                            maxLength: {
+                                value: 500,
+                                message: "Personal description cannot exceed 500 characters"
+                            } 
+                        })}
                     />
+                    {errors.personalDescription && <p className="text-red-600 text-sm">{errors.personalDescription.message}</p>}
                 </div>
 
                 <div className="mb-4">
@@ -124,6 +131,8 @@ function PatientSignUp({ baseUserId, handleSuccessfulCreation }) {
                     Sign Up
                 </button>
             </form>
+            
+            <DevTool control={control} />
         </div>
     );
 }
