@@ -8,9 +8,6 @@ function CaretakerSignUp({ baseUserId, handleSuccessfulCreation }) {
     const { register, control, handleSubmit, formState: { errors } } = useForm();
     
     const [sicknesses, setSicknesses] = useState([]);
-    const [personalDescription, setPersonalDescription] = useState("");
-    const [salary, setSalary] = useState(0);
-    const [availability, setAvailability] = useState(0);
     const [selectedSicknesses, setSelectedSicknesses] = useState([]);
     const [error, setError] = useState(""); 
 
