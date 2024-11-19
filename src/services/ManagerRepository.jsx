@@ -8,9 +8,9 @@ function getManagersByPosition({position}){
     return api.get(`/manager/position/${position.id}`);
 }
 
-function getManagerById({id}){
-    return api.get(`/manager/id:${id}`);
-}
+function getManagerById (id) {
+    return api.get(`/manager/${id}`);
+};
 
 export {
     createManagerAccount,
