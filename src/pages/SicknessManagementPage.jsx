@@ -3,11 +3,13 @@ import { createSickness, getAllSicknesses, deleteSickness, updateSicknessById } 
 import SicknessesList from "../components/SicknessManagementPage/SicknessesList";
 import InputSickness from "../components/SicknessManagementPage/InputSickness";
 import "../css/sicknessPage.css";
+import Unauthorized_GoToLogin from "../components/authorization/Unauthorized_GoToLogin";
 
-function SicknessManagementPage() {
+function SicknessManagementPage({claims}) {
     const [sicknesses, setSicknesses] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [authorized, setAuthorized] = useState(false);
 
     const fetchSicknesses = async () => {
         try {
@@ -16,13 +18,16 @@ function SicknessManagementPage() {
             const response = await getAllSicknesses();
             setSicknesses(response.data);
         } catch (error) {
+            if(error.status == 401 || error.status == 403){
+                setAuthorized(false);
+            }
             setError("Failed to fetch sicknesses");
         } finally {
             setLoading(false);
         }
     };
 
-    useEffect(() => {
+    useEffect(() => {   
         fetchSicknesses();
     }, []);
 
@@ -43,6 +48,10 @@ function SicknessManagementPage() {
             fetchSicknesses();
         })
     }
+
+    if(!claims?.roles.includes("MANAGER")) return(
+        <Unauthorized_GoToLogin message="Only managers can access this page. Please log in with a manager account."/>
+    )
 
     if (loading) return (
         <div className="sickness-management-container">
