@@ -1,12 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { getAnnouncementById } from '../services/AnnouncementsRepository';
 import { useEffect, useState } from 'react';
+import Unauthorized_GoToLogin from '../components/authorization/Unauthorized_GoToLogin';
 
 function AnnouncementBodyPage() {
     const { id } = useParams();
 
     const [announcement, setAnnouncement] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [authorized, setAuthorized] = useState(true);
 
     const fetchAnnouncement = async () => {
         try {
@@ -14,6 +16,9 @@ function AnnouncementBodyPage() {
             const response = await getAnnouncementById(id);
             setAnnouncement(response.data);
         } catch (error) {
+            if(error.status == 401 || error.status == 403){
+                setAuthorized(false);
+            }
             console.error('Error fetching announcement:', error);
         } finally {
             setLoading(false);
@@ -23,6 +28,10 @@ function AnnouncementBodyPage() {
     useEffect(() => {
         fetchAnnouncement();
     }, [id]);
+
+    if(!authorized) return(
+        <Unauthorized_GoToLogin message="You need to have a patient account to view health announcements. Please log in as a patient to proceed." />
+    )
 
     return (
         <div className="min-h-screen bg-[#f0fdf4] flex justify-center items-start py-10 px-4">

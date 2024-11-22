@@ -1,13 +1,57 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/login.css';
+import AuthService from '../services/AuthService.jsx';
+import { getManagerById } from '../services/ManagerRepository.jsx';
+import TokenManager from '../services/TokenManager.jsx';
 
-const Login = () => {
+const Login = ({onLogin}) => {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  
+    AuthService.login(email, password)
+      .then((claims) => {
+        if (claims) {
+          onLogin(claims);
+          navigate('/');
+        } else {
+          console.error("Invalid login response:", claims);
+          alert("Login failed! Invalid response from server.");
+        }
+      })
+      .catch((error) => {
+        alert("Login failed! Please check your credentials.");
+        console.error("Error during login:", error);
+      });
+  };
+  
+
+  const getUserDetails = () => {
+    const claims = TokenManager.getClaims();
+
+    if (claims?.roles?.includes('MANAGER') && claims?.userId) {
+        getManagerById(claims.userId)
+            .then(manager => {
+                console.log("Manager details fetched:", manager);
+            })
+            .catch(error => {
+                console.error("Error fetching manager details:", error);
+            });
+    } else {
+        console.error("Claims are missing roles or userId is undefined");
+    }
+};
+
   return (
-    <div className="min-h-screen d-flex align-items-center justify-content-center bg-green-50">
+    <div className="page-background">
       <div className="login-container bg-white shadow-md rounded-lg p-5 max-w-md w-full">
         <h2 className="text-center mb-4 text-green-700">Login to CareNest</h2>
-        <form>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="mb-3">
             <label htmlFor="email" className="form-label text-lg text-gray-700">
               Email Address
@@ -18,6 +62,7 @@ const Login = () => {
               id="email"
               placeholder="Enter your email"
               required
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -30,19 +75,10 @@ const Login = () => {
               id="password"
               placeholder="Enter your password"
               required
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="d-flex justify-content-between align-items-center mb-3">
-            <div className="form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id="rememberMe"
-              />
-              <label className="form-check-label text-gray-700" htmlFor="rememberMe">
-                Remember me
-              </label>
-            </div>
             <a href="/" className="text-sm text-green-600 hover:text-green-700">
               Forgot your password?
             </a>

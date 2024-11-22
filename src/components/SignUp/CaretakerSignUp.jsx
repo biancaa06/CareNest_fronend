@@ -1,22 +1,27 @@
-import React, { useState, useEffect } from "react";
-import '../../css/signup.css';
+import { useEffect, useState } from "react";
 import { getAllSicknesses } from "../../services/SicknessRepository";
-import { createPatientAccount } from "../../services/PatientRepository";
-import { useForm } from "react-hook-form";
+import { createCaretakerAccount } from "../../services/CaretakerRepository";
 import { DevTool } from "@hookform/devtools";
+import { useForm } from "react-hook-form";
 
-function PatientSignUp({ baseUserId, handleSuccessfulCreation }) {
-
+function CaretakerSignUp({ baseUserId, handleSuccessfulCreation }) {
     const { register, control, handleSubmit, formState: { errors } } = useForm();
+    
     const [sicknesses, setSicknesses] = useState([]);
     const [selectedSicknesses, setSelectedSicknesses] = useState([]);
     const [error, setError] = useState(""); 
 
+    const availabilityTypes = [
+        { id: 1, name: "FULL_TIME" },
+        { id: 2, name: "PART_TIME" }
+    ];
+
+    const fetchSicknesses = async () => {
+        const response = await getAllSicknesses();
+        setSicknesses(response.data);
+    };
+
     useEffect(() => {
-        const fetchSicknesses = async () => {
-            const response = await getAllSicknesses();
-            setSicknesses(response.data);
-        };
         fetchSicknesses();
     }, []);
 
@@ -34,27 +39,33 @@ function PatientSignUp({ baseUserId, handleSuccessfulCreation }) {
         setError(null);
 
         if (selectedSicknesses.length === 0) {
-            setError("Please select at least one sickness.");
+            setError("At least one specialisation is required.");
             return;
         }
 
-        console.log(data);
         try {
-            await createPatientAccount({
+            await createCaretakerAccount({
                 baseUserId,
-                personalDescription: data.personalDescription,
-                sicknesses: selectedSicknesses.map(s => s.id)
+                personalDescription : data.personalDescription,
+                salaryPerHour: parseFloat(data.salary),
+                availabilityId: data.availability,
+                specialisations: selectedSicknesses.map(s => s.id)
             });
             handleSuccessfulCreation();
         } catch (err) {
-            setError(err.response?.data?.detail || "An error occurred");
+            const errorMessage = err.response?.data?.message || "An unexpected error occurred.";
+            setError(errorMessage);
         }
     };
 
     return (
+        <>
         <div className="signup-container">
-            <h2 className="text-2xl font-bold text-center text-green-700 mb-6">Sign Up as Patient</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <h2 className="text-2xl font-bold text-center text-green-700 mb-6">Sign Up as Caretaker</h2>
+
+            {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
+            
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="mb-4">
                     <label htmlFor="description" className="form-label text-lg text-gray-700 font-semibold mb-2">
                         Personal Description
@@ -72,12 +83,59 @@ function PatientSignUp({ baseUserId, handleSuccessfulCreation }) {
                             } 
                         })}
                     />
-                    {errors.personalDescription && <p className="text-red-600 text-sm">{errors.personalDescription.message}</p>}
+                    {errors.personalDescription && <p className="text-red-500 text-sm">{errors.personalDescription.message}</p>}
+                </div>
+
+                <div className="mb-4">
+                    <label htmlFor="salary" className="form-label text-lg text-gray-700 font-semibold mb-2">
+                        Salary per hour
+                    </label>
+                    <input
+                        type="number"
+                        id="salary"
+                        placeholder="Enter your hourly salary"
+                        className="w-full input-field"
+                        {...register("salary", { 
+                            required: "Salary value is required" ,
+                            min:{
+                                value: 0,
+                                message: "Salary must be between 0 and 100"
+                            },
+                            max: {
+                                value:100,
+                                message: "alary must be between 0 and 100"
+                            }
+                        })}
+                        step="0.01"
+                        min="0"
+                        pattern="^\d+(\.\d{1,2})?$"
+                    />
+                    {errors.salary && <p className="text-red-500 text-sm">{errors.salary.message}</p>}
+                </div>
+
+                <div>
+                    <label htmlFor="availability" className="form-label text-lg text-gray-700">
+                        Availability
+                    </label>
+                    <select
+                        id="availability"
+                        className="form-control input-field"
+                        
+                        {...register("availability", { required: "Availability required" })}
+                    >
+                        <option value="">Select your availability</option>
+                        {availabilityTypes.map((a) => (
+                            <option key={a.id} value={a.id}>
+                                {a.name}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.availability && <p className="text-red-500 text-sm">{errors.availability.message}</p>}
                 </div>
 
                 <div className="mb-4">
                     <label className="form-label text-lg text-gray-700 font-semibold mb-2">
-                        Select Sicknesses
+                        Select you specialisations
                     </label>
                     <div className="max-h-32 overflow-y-auto bg-gray-50 border border-gray-200 rounded-lg p-2">
                         <div className="grid grid-cols-2 gap-2">
@@ -101,8 +159,8 @@ function PatientSignUp({ baseUserId, handleSuccessfulCreation }) {
 
                 {selectedSicknesses.length > 0 && (
                     <div className="mb-4">
-                        <label className="form-label text-lg text-gray-700 font-semibold mb-2">Selected Sicknesses</label>
-                        <div className="flex flex-wrap gap-2">
+                        <label className="form-label text-lg text-gray-700 font-semibold mb-2">Selected specialisations</label>
+                        <div className="flex flex-wrap max-h-10 overflow-y-auto gap-2">
                             {selectedSicknesses.map((sickness) => (
                                 <div
                                     key={sickness.id}
@@ -122,8 +180,6 @@ function PatientSignUp({ baseUserId, handleSuccessfulCreation }) {
                     </div>
                 )}
 
-                {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
-
                 <button
                     type="submit"
                     className="submit-button w-full py-3 mt-6"
@@ -131,10 +187,10 @@ function PatientSignUp({ baseUserId, handleSuccessfulCreation }) {
                     Sign Up
                 </button>
             </form>
-            
             <DevTool control={control} />
         </div>
-    );
+        </>
+    )
 }
 
-export default PatientSignUp;
+export default CaretakerSignUp

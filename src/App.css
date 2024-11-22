@@ -54,3 +54,28 @@ html, body, #root {
 .read-the-docs {
   color: #888;
 }
+
+.page-background {
+  background-color: #e6f7e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.page-background-top {
+  padding-top: 1rem;
+}
+
+.content-container {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+
+
