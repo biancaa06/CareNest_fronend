@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SubNavbar from "../components/ManagersManagementPage/SubNavbar";
 import CreateManagerAccountForm from "../components/ManagersManagementPage/CreateManagerAccountForm";
 import ManagersList from "../components/ManagersManagementPage/ManagersList";
+import TokenManager from "../services/TokenManager";
+import Unauthorized_GoToLogin from "../components/authorization/Unauthorized_GoToLogin";
 
-const ManagersManagementPage = () => {
+const ManagersManagementPage = ({claims}) => {
     const [seeCreateAccountForm, setSeeCreateAccountForm] = useState(true);
     const [seePrManagerList, setSeePrManagersList] = useState(false);
     const [seeMedicalManagersList, setSeeMedicalManagerList] = useState(false);
+    const [authorized, setAuthorized] = useState(false);
 
     const positions = [
         { id: 1, name: "PR" },
@@ -32,6 +35,15 @@ const ManagersManagementPage = () => {
         setSeePrManagersList(true);
         setSeeMedicalManagerList(false);
         setSeeCreateAccountForm(false);
+    }
+
+    const isManager = claims?.roles?.includes("MANAGER");
+    if (!isManager) {
+        return (
+            <Unauthorized_GoToLogin 
+                message="Only managers can access this page. Please log in with a manager account."
+            />
+        );
     }
 
     return (
