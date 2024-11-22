@@ -13,6 +13,7 @@ import ManagersManagementPage from './pages/ManagersManagementPage';
 import CaretakersPage from './pages/CaretakersPage';
 import ProfilePage from './pages/ProfilePage';
 import TokenManager from './services/TokenManager';
+import MyPostsPage from './pages/MyPostsPage';
 
 function App() {
   const [claims, setClaims] = useState(TokenManager.getClaims());
@@ -39,6 +40,7 @@ function App() {
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/announcements" element={<AnnouncementsPage />} />
+          <Route path="/posts" element={<MyPostsPage claims={claims} />} />
           <Route path="/announcements/:id" element={<AnnouncementBodyPage />} />
           <Route path="/sicknesses" element={<SicknessManagementPage claims={claims}/>} />
           <Route path="/managersManagement" element={<ManagersManagementPage claims={claims}/>} />
