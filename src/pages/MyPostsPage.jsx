@@ -75,7 +75,7 @@ const MyPostsPage = ({claims}) =>{
 
     if (isEditing) {
         return (
-        <div className="min-h-screen bg-[#f0fdf4] flex justify-center items-start py-10 px-4">
+        <div className="page-background-top min-h-screen bg-[#f0fdf4] flex justify-center items-start py-10 px-4">
             <AnnouncementBodyComponent
                 announcement={editingAnnouncement}
                 isEditing={isEditing}

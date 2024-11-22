@@ -48,8 +48,8 @@ function AnnouncementComponent({ claims, announcement, handleEditing}) {
                         <div className="mt-4">
                             <button
                                 onClick={() => handleEditing({announcement})}
-                                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
-                            >
+                                className="inline-block rounded bg-[#2e6b34] px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(46,107,52,0.5)] transition duration-150 ease-in-out hover:bg-[#255428] hover:shadow-[0_8px_9px_-4px_rgba(46,107,52,0.3),0_4px_18px_0_rgba(46,107,52,0.2)] focus:bg-[#255428] focus:shadow-[0_8px_9px_-4px_rgba(46,107,52,0.3),0_4px_18px_0_rgba(46,107,52,0.2)] focus:outline-none focus:ring-0 active:bg-[#1e4620] active:shadow-[0_8px_9px_-4px_rgba(46,107,52,0.3),0_4px_18px_0_rgba(46,107,52,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(46,107,52,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(46,107,52,0.2),0_4px_18px_0_rgba(46,107,52,0.1)]"
+            >
                                 Edit
                             </button>
                         </div>

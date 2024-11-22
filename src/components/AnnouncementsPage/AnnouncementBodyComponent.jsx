@@ -10,7 +10,7 @@ function AnnouncementBodyComponent({ announcement, isEditing, onSave, onCancel }
     }, [announcement]);
 
     return (
-        <div className="w-full max-w-8xl bg-white rounded-lg p-10 shadow-lg overflow-auto">
+        <div className="page-background-top w-full max-w-8xl bg-white rounded-lg p-10 shadow-lg overflow-auto">
             {isEditing ? (
                 <div className="mb-6">
                     <label htmlFor="title" className="block text-gray-700 font-semibold mb-2">
