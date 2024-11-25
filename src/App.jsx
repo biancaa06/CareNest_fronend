@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import React, {useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/NavBar';
@@ -14,6 +14,8 @@ import CaretakersPage from './pages/CaretakersPage';
 import ProfilePage from './pages/ProfilePage';
 import TokenManager from './services/TokenManager';
 import MyPostsPage from './pages/MyPostsPage';
+import CreateAnnouncement from './components/AnnouncementsPage/CreateAnnouncement';
+import AuthGuard from './components/handlers/AuthGuard';
 
 function App() {
   const [claims, setClaims] = useState(TokenManager.getClaims());
@@ -35,11 +37,13 @@ function App() {
     <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Router>
         <Navbar claims={claims} onLogout={handleLogout} />
+        <AuthGuard  claims={claims} setClaims={setClaims}/>
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/announcements" element={<AnnouncementsPage />} />
+          <Route path="/announcements/create" element={<CreateAnnouncement />} />
           <Route path="/posts" element={<MyPostsPage claims={claims} />} />
           <Route path="/announcements/:id" element={<AnnouncementBodyPage />} />
           <Route path="/sicknesses" element={<SicknessManagementPage claims={claims}/>} />
