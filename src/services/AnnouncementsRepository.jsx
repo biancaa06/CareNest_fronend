@@ -16,10 +16,15 @@ function updateAnnouncement({id, title, description}){
     return api.put(`/announcements/${id}`, {title, description})
 }
 
+function createAnnouncement({title, description, authorId}){
+    return api.post('/announcements', {title, description, authorId})
+}
+
 
 export{
     getAllAnnouncements,
     getAnnouncementById,
     getAnnouncementsByAuthorId,
-    updateAnnouncement
+    updateAnnouncement,
+    createAnnouncement
 }

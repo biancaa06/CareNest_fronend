@@ -43,7 +43,6 @@ function App() {
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/announcements" element={<AnnouncementsPage />} />
-          <Route path="/announcements/create" element={<CreateAnnouncement />} />
           <Route path="/posts" element={<MyPostsPage claims={claims} />} />
           <Route path="/announcements/:id" element={<AnnouncementBodyPage />} />
           <Route path="/sicknesses" element={<SicknessManagementPage claims={claims}/>} />

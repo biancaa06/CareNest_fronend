@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import AnnouncementList from "../components/AnnouncementsPage/AnnouncementList"
 import Unauthorized_GoToLogin from "../components/authorization/Unauthorized_GoToLogin";
-import { getAnnouncementsByAuthorId, updateAnnouncement } from "../services/AnnouncementsRepository";
+import { createAnnouncement, getAnnouncementsByAuthorId, updateAnnouncement } from "../services/AnnouncementsRepository";
 import AnnouncementBodyComponent from "../components/AnnouncementsPage/AnnouncementBodyComponent";
+import { useNavigate } from "react-router-dom";
+import CreateAnnouncement from "../components/AnnouncementsPage/CreateAnnouncement";
 
 const MyPostsPage = ({claims}) =>{
 
@@ -14,11 +16,15 @@ const MyPostsPage = ({claims}) =>{
     const [isEditing, setIsEditing] = useState(false);
     const [editingAnnouncement, setEditingAnnouncement] = useState(null);
 
+    const [navigateToCreate, setNavigateToCreate] = useState(false);
+
+    const navigate = useNavigate();
+
     const handleEditing = ({announcement}) =>{
         setEditingAnnouncement(announcement);
         setIsEditing(true);
     }
-    const handelCancelEditing = () =>{
+    const handleCancelEditing = () =>{
         setIsEditing(false);
     }
 
@@ -35,6 +41,32 @@ const MyPostsPage = ({claims}) =>{
             setError('Failed to update announcements');
         }
     }
+
+    const handlePostSave = async (data) =>{
+        console.log(data.title);
+        console.log(data.description);
+        try{
+            const response = await createAnnouncement({
+                title: data.title, 
+                description: data.description,
+                authorId: claims.userId
+            })
+            console.log(response);
+            setNavigateToCreate(false);
+            fetchAnnouncements();
+        }
+        catch(error){
+            if(error?.status == 401 || error.status == 403){
+                setUnauthorized(true);
+            }
+        }
+    }
+
+    const handleCreateButton = (e) => {
+        e.preventDefault();
+        setNavigateToCreate(true);
+    };
+    
 
     const fetchAnnouncements = async () => {
         try {
@@ -80,19 +112,29 @@ const MyPostsPage = ({claims}) =>{
                 announcement={editingAnnouncement}
                 isEditing={isEditing}
                 onSave={handleEditingSave}
-                onCancel={handelCancelEditing}
+                onCancel={handleCancelEditing}
             />
         </div>
         );
     }
     
+    if(navigateToCreate){
+        return(
+            <CreateAnnouncement onSubmit={handlePostSave}/>
+        )
+    }
 
     return (
         <>
         <div className="announcements_container">
             <h1 className="text-5xl font-bold text-center text-green-700 mb-10">My Posts</h1>
+            <button className="btn btn-success btn-lg"
+                onClick={handleCreateButton}
+            >
+                <i className="fa-solid fa-file-pen"></i> Create a new post
+            </button>
             <AnnouncementList announcements={announcements} claims={claims} handleEditing={handleEditing} 
-                onCancel={handelCancelEditing}/>
+                onCancel={handleCancelEditing}/>
         </div>
         </>
     )

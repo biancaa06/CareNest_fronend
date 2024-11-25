@@ -54,7 +54,6 @@ function PersonalData({ user }) {
         }
     };
 
-    // Personal data save function
     const handleSave = async () => {
         setError("");
         try {
