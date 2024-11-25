@@ -20,11 +20,16 @@ function createAnnouncement({title, description, authorId}){
     return api.post('/announcements', {title, description, authorId})
 }
 
+function deleteAnnouncementById({id}){
+    return api.delete(`/announcements/${id}`);
+}
+
 
 export{
     getAllAnnouncements,
     getAnnouncementById,
     getAnnouncementsByAuthorId,
     updateAnnouncement,
-    createAnnouncement
+    createAnnouncement,
+    deleteAnnouncementById
 }

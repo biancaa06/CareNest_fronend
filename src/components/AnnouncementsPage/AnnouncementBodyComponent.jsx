@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import DeleteAnnouncement from "./DeleteAnnouncement";
 
-function AnnouncementBodyComponent({ announcement, isEditing, onSave, onCancel }) {
+function AnnouncementBodyComponent({ announcement, isEditing, onSave, onCancel, onDelete}) {
     const [title, setTitle] = useState(announcement.title);
     const [description, setDescription] = useState(announcement.description);
 
@@ -10,7 +11,10 @@ function AnnouncementBodyComponent({ announcement, isEditing, onSave, onCancel }
     }, [announcement]);
 
     return (
-        <div className="page-background-top w-full max-w-8xl bg-white rounded-lg p-10 shadow-lg overflow-auto">
+        <div className="relative page-background-top w-full max-w-8xl bg-white rounded-lg p-10 shadow-lg overflow-auto">
+            <div className="flex justify-end mb-4">
+                <DeleteAnnouncement announcement={announcement} onDelete={onDelete}/>
+            </div>
             {isEditing ? (
                 <div className="mb-6">
                     <label htmlFor="title" className="block text-gray-700 font-semibold mb-2">
@@ -68,19 +72,19 @@ function AnnouncementBodyComponent({ announcement, isEditing, onSave, onCancel }
 
             {isEditing && (
                 <div className="flex justify-center">
-                <button
-                    onClick={() => onSave(announcement.id, title, description)}
-                    className="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition duration-200"
-                >
-                    Save
-                </button>
-                <button
-                    onClick={onCancel}
-                    className="px-4 py-2 ml-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200"
-                >
-                    Cancel
-                </button>
-            </div>
+                    <button
+                        onClick={() => onSave(announcement.id, title, description)}
+                        className="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition duration-200"
+                    >
+                        Save
+                    </button>
+                    <button
+                        onClick={onCancel}
+                        className="px-4 py-2 ml-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-200"
+                    >
+                        Cancel
+                    </button>
+                </div>
             )}
         </div>
     );

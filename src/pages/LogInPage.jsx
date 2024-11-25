@@ -67,7 +67,7 @@ const Login = ({onLogin}) => {
             </a>
           </div>
           <button type="submit" className="btn btn-success w-80 submit-button">
-            <i className="fas fa-sign-in-alt"></i> Login as Patient
+            <i className="fas fa-sign-in-alt"></i> Login
           </button>
           
         </form>

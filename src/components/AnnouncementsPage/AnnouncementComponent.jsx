@@ -6,7 +6,6 @@ function AnnouncementComponent({ claims, announcement, handleEditing}) {
     const authorFullName = `${announcement.author.baseUser.firstName} ${announcement.author.baseUser.lastName}`;
 
     const [profilePicture, setProfilePicture] = useState(announcement.author.baseUser.profileImage);
-    const navigate = useNavigate();
 
     useEffect(() => {
         if (announcement?.author?.baseUser?.profileImage) {

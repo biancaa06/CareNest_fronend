@@ -3,7 +3,6 @@ import AnnouncementList from "../components/AnnouncementsPage/AnnouncementList"
 import Unauthorized_GoToLogin from "../components/authorization/Unauthorized_GoToLogin";
 import { createAnnouncement, getAnnouncementsByAuthorId, updateAnnouncement } from "../services/AnnouncementsRepository";
 import AnnouncementBodyComponent from "../components/AnnouncementsPage/AnnouncementBodyComponent";
-import { useNavigate } from "react-router-dom";
 import CreateAnnouncement from "../components/AnnouncementsPage/CreateAnnouncement";
 
 const MyPostsPage = ({claims}) =>{
@@ -17,8 +16,6 @@ const MyPostsPage = ({claims}) =>{
     const [editingAnnouncement, setEditingAnnouncement] = useState(null);
 
     const [navigateToCreate, setNavigateToCreate] = useState(false);
-
-    const navigate = useNavigate();
 
     const handleEditing = ({announcement}) =>{
         setEditingAnnouncement(announcement);
@@ -43,15 +40,12 @@ const MyPostsPage = ({claims}) =>{
     }
 
     const handlePostSave = async (data) =>{
-        console.log(data.title);
-        console.log(data.description);
         try{
-            const response = await createAnnouncement({
+            await createAnnouncement({
                 title: data.title, 
                 description: data.description,
                 authorId: claims.userId
             })
-            console.log(response);
             setNavigateToCreate(false);
             fetchAnnouncements();
         }
@@ -66,6 +60,11 @@ const MyPostsPage = ({claims}) =>{
         e.preventDefault();
         setNavigateToCreate(true);
     };
+
+    const handleDelete = () => {
+        fetchAnnouncements();
+        setIsEditing(false);
+    }
     
 
     const fetchAnnouncements = async () => {
@@ -74,16 +73,16 @@ const MyPostsPage = ({claims}) =>{
             const response = await getAnnouncementsByAuthorId(claims.userId);
             setAnnouncements(response.data);
         } catch (err) {
-            if(err.status == 401 || err.status == 403){
+            if (err.status === 401 || err.status === 403) {
                 setUnauthorized(true);
-            }
-            else{
-                setError('Failed to fetch announcements');
+            } else {
+                setError("Failed to fetch announcements");
             }
         } finally {
             setLoading(false);
         }
-    };
+    };    
+    
 
     useEffect(() => {
         fetchAnnouncements();
@@ -113,6 +112,7 @@ const MyPostsPage = ({claims}) =>{
                 isEditing={isEditing}
                 onSave={handleEditingSave}
                 onCancel={handleCancelEditing}
+                onDelete={handleDelete}
             />
         </div>
         );
