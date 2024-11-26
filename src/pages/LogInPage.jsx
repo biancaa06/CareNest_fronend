@@ -29,23 +29,6 @@ const Login = ({onLogin}) => {
         console.error("Error during login:", error);
       });
   };
-  
-
-  const getUserDetails = () => {
-    const claims = TokenManager.getClaims();
-
-    if (claims?.roles?.includes('MANAGER') && claims?.userId) {
-        getManagerById(claims.userId)
-            .then(manager => {
-                console.log("Manager details fetched:", manager);
-            })
-            .catch(error => {
-                console.error("Error fetching manager details:", error);
-            });
-    } else {
-        console.error("Claims are missing roles or userId is undefined");
-    }
-};
 
   return (
     <div className="page-background">
@@ -83,17 +66,10 @@ const Login = ({onLogin}) => {
               Forgot your password?
             </a>
           </div>
-          <button type="submit" className="btn btn-success w-100 submit-button">
-            <i className="fas fa-sign-in-alt"></i> Login as Patient
+          <button type="submit" className="btn btn-success w-80 submit-button">
+            <i className="fas fa-sign-in-alt"></i> Login
           </button>
-          <div className="d-flex justify-content-between mt-4">
-            <button type="button" className="btn btn-outline-success w-45 secondary-button">
-              <i className="fas fa-user-nurse"></i> Login as Caretaker
-            </button>
-            <button type="button" className="btn btn-outline-success w-45 secondary-button">
-              <i className="fas fa-user-cog"></i> Login as Manager
-            </button>
-          </div>
+          
         </form>
         <div className="text-center mt-4">
           <span>Don't have an account? </span>
