@@ -8,8 +8,8 @@ function PersonalData({ user }) {
     const [city, setCity] = useState(user?.address?.city || "");
     const [country, setCountry] = useState(user?.address?.country || "");
     
-    const [profilePicture, setProfilePicture] = useState(null);
-    const [uploadedPicture, setUploadedPicture] = useState(null);
+    const [profilePicture, setProfilePicture] = useState("");
+    const [uploadedPicture, setUploadedPicture] = useState("");
 
     const [error, setError] = useState("");
 

@@ -29,8 +29,13 @@ const TokenManager = {
           return true;
         }
       },
+    getRefreshToken: () => localStorage.getItem("refreshToken"),
+    setRefreshToken: (token) => {
+        localStorage.setItem("refreshToken", token);
+    },
     clear: () => {
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         localStorage.removeItem("claims");
     }
 }
