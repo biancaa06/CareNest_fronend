@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/login.css';
 import AuthService from '../services/AuthService.jsx';
-import { getManagerById } from '../services/ManagerRepository.jsx';
-import TokenManager from '../services/TokenManager.jsx';
 
 const Login = ({onLogin}) => {
   const navigate = useNavigate();
