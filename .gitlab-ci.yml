@@ -10,21 +10,10 @@ build:
  - npm run build
 
 build-docker-image:
- stage: image
- image: docker:19.03.12
- services:
- - docker:19.03.12-dind
+ stage: docker_deployment
  script:
- - docker info
- - |
- if [ "$CI_COMMIT_BRANCH" == "main" ]; then
- export IMAGE_NAME=dev
- elif [ "$CI_COMMIT_BRANCH" == "development" ]; then
- export IMAGE_NAME=staging
- else
- echo "Skipping Docker image build for branch $CI_COMMIT_BRANCH"
- exit 0
- fi
  - docker stop carenest-frontend; if ($?) { docker rm carenest-frontend }
  - docker build -t carenest-fe:dev .
  - docker run --name carenest-frontend -p 5173:5173 carenest-fe:dev
+   only:
+    - main
