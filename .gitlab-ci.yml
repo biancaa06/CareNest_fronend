@@ -15,5 +15,5 @@ build-docker-image:
  - docker stop carenest-frontend; if ($?) { docker rm carenest-frontend }
  - docker build -t carenest-fe:dev .
  - docker run --name carenest-frontend -p 5173:5173 carenest-fe:dev
-   only:
+ only:
     - main
