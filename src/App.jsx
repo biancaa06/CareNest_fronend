@@ -14,7 +14,6 @@ import CaretakersPage from './pages/CaretakersPage';
 import ProfilePage from './pages/ProfilePage';
 import TokenManager from './services/TokenManager';
 import MyPostsPage from './pages/MyPostsPage';
-import CreateAnnouncement from './components/AnnouncementsPage/CreateAnnouncement';
 import AuthGuard from './components/handlers/AuthGuard';
 
 function App() {
