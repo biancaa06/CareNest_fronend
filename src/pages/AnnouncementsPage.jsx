@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import AnnouncementList from "../components/AnnouncementsPage/AnnouncementList";
-import '../css/AnnouncementsPage.css';
+import '../css/announcementsPage.css';
 import { getAllAnnouncements } from "../services/AnnouncementsRepository";
 import Unauthorized_GoToLogin from "../components/authorization/Unauthorized_GoToLogin";
 

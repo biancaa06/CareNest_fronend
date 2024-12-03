@@ -1,0 +1,19 @@
+stages:
+ - build
+ - docker_deployment
+
+build:
+ stage: build
+ image: node:20-alpine
+ script:
+ - npm install
+ - npm run build
+
+build-docker-image:
+ stage: docker_deployment
+ script:
+ - docker stop carenest-frontend; if ($?) { docker rm carenest-frontend }
+ - docker build -t carenest-fe:dev .
+ - docker run --name carenest-frontend -p 5173:5173 carenest-fe:dev
+ only:
+    - main
