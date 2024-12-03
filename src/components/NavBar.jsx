@@ -25,13 +25,18 @@ const Navbar = ({ claims, onLogout }) => {
             <i className="fas fa-user-nurse"></i> Caretakers
           </Link>
           {claims?.roles?.includes('MANAGER') && (
+            <Link to="/posts" className="text-white font-bold hover:bg-green-700 px-4 py-2 rounded">
+              <i className="fa-regular fa-paper-plane"></i> My posts
+            </Link>
+          )}
+          {claims?.roles?.includes('MANAGER') && (
             <Link to="/managersManagement" className="text-white font-bold hover:bg-green-700 px-4 py-2 rounded">
               <i className="fas fa-user-cog"></i> Managers
             </Link>
           )}
           {claims?.roles?.includes('MANAGER') && (
             <Link to="/sicknesses" className="text-white font-bold hover:bg-green-700 px-4 py-2 rounded">
-              <i class="fa-solid fa-bacterium"></i> Sicknesses
+              <i className="fa-solid fa-bacterium"></i> Sicknesses
             </Link>
           )}
         </div>

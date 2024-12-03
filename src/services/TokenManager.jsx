@@ -14,8 +14,28 @@ const TokenManager = {
         localStorage.setItem("claims", JSON.stringify(claims));
         return claims;
     },
+    checkExpiration: () => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+          return true;
+        }
+    
+        try {
+          const decoded = jwtDecode(token);
+          const currentTime = Math.floor(Date.now() / 1000);
+          return decoded.exp < currentTime;
+        } catch (error) {
+          console.error('Error decoding token:', error);
+          return true;
+        }
+      },
+    getRefreshToken: () => localStorage.getItem("refreshToken"),
+    setRefreshToken: (token) => {
+        localStorage.setItem("refreshToken", token);
+    },
     clear: () => {
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
         localStorage.removeItem("claims");
     }
 }
