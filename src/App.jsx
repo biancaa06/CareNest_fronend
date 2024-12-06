@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,13 +15,60 @@ import ProfilePage from './pages/ProfilePage';
 import TokenManager from './services/TokenManager';
 import MyPostsPage from './pages/MyPostsPage';
 import AuthGuard from './components/handlers/AuthGuard';
+import WebSocketService from './services/WebSocketService';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [claims, setClaims] = useState(TokenManager.getClaims());
 
+  useEffect(() => {
+    if (claims) {
+      const brokerURL = 'ws://localhost:8080/ws';
+
+      const onConnect = () => {
+        WebSocketService.subscribe('/topic/announcements', (message) => {
+          const notification = message;
+          toast.info(`New announcement from ${notification.authorName}: ${notification.announcementTitle}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        });
+      };
+
+      WebSocketService.connect(brokerURL, onConnect);
+    }
+
+    return () => {
+      WebSocketService.disconnect();
+    };
+  }, [claims]);
+
   const handleLogin = (newClaims) => {
     if (newClaims) {
       setClaims(newClaims);
+
+      const brokerURL = 'ws://localhost:8080/ws';
+
+      const onConnect = () => {
+        WebSocketService.subscribe('/topic/announcements', (message) => {
+          const notification = message;
+          toast.info(`New announcement from ${notification.authorName}: ${notification.announcementTitle}`, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          });
+        });
+      };
+
+      WebSocketService.connect(brokerURL, onConnect);
     } else {
       console.error("Invalid claims received during login:", newClaims);
     }
@@ -29,12 +76,14 @@ function App() {
 
   const handleLogout = () => {
     TokenManager.clear();
+    WebSocketService.disconnect();
     setClaims(null);
   };
 
   return (
     <div className="App" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Router>
+        <ToastContainer />
         <Navbar claims={claims} onLogout={handleLogout} />
         <AuthGuard  claims={claims} setClaims={setClaims}/>
         <Routes>

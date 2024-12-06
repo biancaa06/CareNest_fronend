@@ -16,6 +16,7 @@ const AuthGuard = ({ claims, setClaims, children }) => {
         } catch (error) {
           console.error('Token refresh failed:', error);
           TokenManager.clear();
+          WebSocketService.disconnect();
           setClaims(null);
           navigate('/login');
         }
