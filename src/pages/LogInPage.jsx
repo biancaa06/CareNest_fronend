@@ -60,7 +60,7 @@ const Login = ({onLogin}) => {
             />
           </div>
           <div className="d-flex justify-content-between align-items-center mb-3">
-            <a href="/" className="text-sm text-green-600 hover:text-green-700">
+            <a href="/reset-password/email" className="text-sm text-green-600 hover:text-green-700">
               Forgot your password?
             </a>
           </div>

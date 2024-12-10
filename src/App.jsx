@@ -18,6 +18,8 @@ import AuthGuard from './components/handlers/AuthGuard';
 import WebSocketService from './services/WebSocketService';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import NewPasswordSet from './components/resetPassword/NewPasswordSet';
 
 function App() {
   const [claims, setClaims] = useState(TokenManager.getClaims());
@@ -97,6 +99,8 @@ function App() {
           <Route path="/managersManagement" element={<ManagersManagementPage claims={claims}/>} />
           <Route path="/caretakers" element={<CaretakersPage />} />
           <Route path="/profile/:id" element={<ProfilePage claims={claims}/>} />
+          <Route path="/reset-password/email" element={<ResetPasswordPage />} />
+          <Route path="/reset-password/new" element={<NewPasswordSet />} />
         </Routes>
       </Router>
     </div>
