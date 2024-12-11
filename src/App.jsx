@@ -27,10 +27,16 @@ function App() {
   useEffect(() => {
     if (claims) {
       const brokerURL = 'ws://localhost:8080/ws';
-
+  
       const onConnect = () => {
         WebSocketService.subscribe('/topic/announcements', (message) => {
           const notification = message;
+
+          if (String(notification.authorId) === String(claims.userId)){
+            console.log("Skipping self-notification for:", notification);
+            return;
+          }
+  
           toast.info(`New announcement from ${notification.authorName}: ${notification.announcementTitle}`, {
             position: "top-right",
             autoClose: 5000,
@@ -41,14 +47,16 @@ function App() {
           });
         });
       };
-
+  
       WebSocketService.connect(brokerURL, onConnect);
+      console.log("subscribed on useEffect/");
     }
-
+  
     return () => {
       WebSocketService.disconnect();
     };
   }, [claims]);
+  
 
   const handleLogin = (newClaims) => {
     if (newClaims) {
@@ -59,6 +67,10 @@ function App() {
       const onConnect = () => {
         WebSocketService.subscribe('/topic/announcements', (message) => {
           const notification = message;
+          if (String(notification.authorId) === String(claims.userId)) {
+            console.log("Skipping self-notification for:", notification);
+            return;
+          }
           toast.info(`New announcement from ${notification.authorName}: ${notification.announcementTitle}`, {
             position: "top-right",
             autoClose: 5000,
@@ -71,6 +83,7 @@ function App() {
       };
 
       WebSocketService.connect(brokerURL, onConnect);
+      console.log("subscribed on login/");
     } else {
       console.error("Invalid claims received during login:", newClaims);
     }
