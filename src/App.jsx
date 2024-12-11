@@ -18,6 +18,8 @@ import AuthGuard from './components/handlers/AuthGuard';
 import WebSocketService from './services/WebSocketService';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import NewPasswordSet from './components/resetPassword/NewPasswordSet';
 
 function App() {
   const [claims, setClaims] = useState(TokenManager.getClaims());
@@ -25,10 +27,16 @@ function App() {
   useEffect(() => {
     if (claims) {
       const brokerURL = 'ws://localhost:8080/ws';
-
+  
       const onConnect = () => {
         WebSocketService.subscribe('/topic/announcements', (message) => {
           const notification = message;
+
+          if (String(notification.authorId) === String(claims.userId)){
+            console.log("Skipping self-notification for:", notification);
+            return;
+          }
+  
           toast.info(`New announcement from ${notification.authorName}: ${notification.announcementTitle}`, {
             position: "top-right",
             autoClose: 5000,
@@ -39,14 +47,16 @@ function App() {
           });
         });
       };
-
+  
       WebSocketService.connect(brokerURL, onConnect);
+      console.log("subscribed on useEffect/");
     }
-
+  
     return () => {
       WebSocketService.disconnect();
     };
   }, [claims]);
+  
 
   const handleLogin = (newClaims) => {
     if (newClaims) {
@@ -57,6 +67,10 @@ function App() {
       const onConnect = () => {
         WebSocketService.subscribe('/topic/announcements', (message) => {
           const notification = message;
+          if (String(notification.authorId) === String(claims.userId)) {
+            console.log("Skipping self-notification for:", notification);
+            return;
+          }
           toast.info(`New announcement from ${notification.authorName}: ${notification.announcementTitle}`, {
             position: "top-right",
             autoClose: 5000,
@@ -69,6 +83,7 @@ function App() {
       };
 
       WebSocketService.connect(brokerURL, onConnect);
+      console.log("subscribed on login/");
     } else {
       console.error("Invalid claims received during login:", newClaims);
     }
@@ -97,6 +112,8 @@ function App() {
           <Route path="/managersManagement" element={<ManagersManagementPage claims={claims}/>} />
           <Route path="/caretakers" element={<CaretakersPage />} />
           <Route path="/profile/:id" element={<ProfilePage claims={claims}/>} />
+          <Route path="/reset-password/email" element={<ResetPasswordPage />} />
+          <Route path="/reset-password/new" element={<NewPasswordSet />} />
         </Routes>
       </Router>
     </div>
