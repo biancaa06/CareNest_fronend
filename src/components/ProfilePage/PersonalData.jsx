@@ -42,6 +42,7 @@ function PersonalData({ user }) {
         try {
             const formData = new FormData();
             formData.append("file", uploadedPicture);
+            console.log("data:", uploadedPicture);
 
             await uploadProfilePicture({ userId: user.id, file: formData });
 
