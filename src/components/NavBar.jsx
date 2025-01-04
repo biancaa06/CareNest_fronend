@@ -39,6 +39,12 @@ const Navbar = ({ claims, onLogout }) => {
               <i className="fa-solid fa-bacterium"></i> Sicknesses
             </Link>
           )}
+
+          {(claims?.roles?.includes('CARETAKER') || claims?.roles?.includes('PATIENT')) && (
+            <Link to="/messages" className="text-white font-bold hover:bg-green-700 px-4 py-2 rounded">
+              <i className="fas fa-user-cog"></i> Messages
+            </Link>
+          )}
         </div>
 
         {claims?.userId &&(

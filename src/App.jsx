@@ -20,6 +20,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import NewPasswordSet from './components/resetPassword/NewPasswordSet';
+import ChatPage from './pages/ChatPage';
 
 function App() {
   const [claims, setClaims] = useState(TokenManager.getClaims());
@@ -84,6 +85,7 @@ function App() {
 
       WebSocketService.connect(brokerURL, onConnect);
       console.log("subscribed on login/");
+      
     } else {
       console.error("Invalid claims received during login:", newClaims);
     }
@@ -114,6 +116,7 @@ function App() {
           <Route path="/profile/:id" element={<ProfilePage claims={claims}/>} />
           <Route path="/reset-password/email" element={<ResetPasswordPage />} />
           <Route path="/reset-password/new" element={<NewPasswordSet />} />
+          <Route path="/messages" element={<ChatPage claims={claims}/>} />
         </Routes>
       </Router>
     </div>

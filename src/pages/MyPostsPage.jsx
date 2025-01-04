@@ -82,7 +82,6 @@ const MyPostsPage = ({claims}) =>{
             setLoading(false);
         }
     };    
-    
 
     useEffect(() => {
         fetchAnnouncements();
