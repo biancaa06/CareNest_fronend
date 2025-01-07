@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import DetailsModal from "./DetailsModal";
+import { useNavigate } from "react-router-dom";
 
 function CaretakerCard({ caretaker }) {
     const [profilePicture, setProfilePicture] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (caretaker?.baseUser?.profileImage) {
@@ -22,6 +24,18 @@ function CaretakerCard({ caretaker }) {
     const handleCloseModal = () => {
         setShowModal(false);
     };
+
+    const handleMessage = (e) => {
+        e.preventDefault();
+        navigate('/messages', {
+            state: { 
+                initialChat: { 
+                    userId: caretaker.baseUser.id,
+                    userName: `${caretaker.baseUser.firstName} ${caretaker.baseUser.lastName}`
+                }
+            }
+        });
+    };    
 
     return (
         <>
@@ -48,6 +62,7 @@ function CaretakerCard({ caretaker }) {
                         <a
                             href="#"
                             className="inline-flex items-center px-4 py-2 text-sm rounded-md font-medium text-center bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500"
+                            onClick={handleMessage}
                         >
                             Message
                         </a>

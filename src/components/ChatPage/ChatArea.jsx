@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import MessageItem from './MessageItem';
 import { getConversationMessages, sendMessage as sendMessageAPI } from '../../services/MessageService';
 
-const ChatArea = ({ claims, receiverId, receiverName }) => {
-  const [messages, setMessages] = useState([]);
+const ChatArea = ({ claims, receiverId, receiverName, messages, setMessages }) => {
   const [input, setInput] = useState('');
   const [pageNumber, setPageNumber] = useState(0);
   const [error, setError] = useState(null);
 
+  const messagesEndRef = useRef(null);
+
   const sendMessage = async () => {
     try {
-      await sendMessageAPI({
+      const newMessage = {
         receiverId,
         text: input,
         senderId: parseInt(claims.userId, 10),
-      });
-      // Add the message to the local state for immediate feedback
-      setMessages([...messages, { senderId: claims.userId, text: input }]);
+        timestamp: new Date().toISOString(),
+      };
+
+      const response = await sendMessageAPI(newMessage);
+
+      setMessages((prevMessages) => [...prevMessages, response.data]);
+
       setInput('');
     } catch (err) {
       setError(err.message || 'Failed to send message');
@@ -25,25 +30,34 @@ const ChatArea = ({ claims, receiverId, receiverName }) => {
 
   const loadMessages = async () => {
     try {
-      console.log('started fetching');
       const response = await getConversationMessages({
         contactedUserId: receiverId,
         connectedUserId: parseInt(claims.userId, 10),
         pageNumber,
         itemsPerPage: 20,
       });
+
       setMessages(response.data);
     } catch (err) {
       setError(err.message || 'Failed to load messages');
     }
   };
 
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+    }
+  };
+
   useEffect(() => {
     if (receiverId) {
-      console.log('receiver id: ', receiverId);
       loadMessages();
     }
   }, [receiverId]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   if (!receiverId) {
     return (
@@ -65,7 +79,10 @@ const ChatArea = ({ claims, receiverId, receiverName }) => {
   return (
     <div className="flex flex-col flex-grow p-4">
       <h2 className="text-2xl font-bold mb-4">Conversation with {receiverName}</h2>
-      <div className="flex-grow border border-gray-300 rounded p-4 overflow-y-auto mb-4 space-y-2">
+      <div
+        ref={messagesEndRef}
+        className="flex-grow border border-gray-300 rounded p-4 overflow-y-auto mb-4 space-y-2"
+      >
         {messages.map((message, index) => (
           <MessageItem key={index} message={message} claims={claims} />
         ))}
