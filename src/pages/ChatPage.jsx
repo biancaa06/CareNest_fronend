@@ -65,6 +65,7 @@ const ChatPage = ({ claims }) => {
   }, [initialChat]);
 
   useEffect(() => {
+    console.log("subscribed")
     const subscription = WebSocketService.subscribe(
       `/user/${claims.userId}/queue/inboxmessages`,
       (newMessage) => {
@@ -79,7 +80,7 @@ const ChatPage = ({ claims }) => {
         }
       }
     );
-  }, [claims.userId]);
+  }, [claims.userId, selectedChat]);
 
   return (
     <div className="flex h-[calc(100vh-70px)]">
