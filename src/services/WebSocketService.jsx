@@ -13,7 +13,7 @@ const WebSocketService = {
     WebSocketService.stompClient = new Client({
       brokerURL,
       connectHeaders: {
-          Authorization: `Bearer ${TokenManager.getAccessToken()}`
+        Authorization: `Bearer ${TokenManager.getAccessToken()}`,
       },
       reconnectDelay: 5000,
       heartbeatIncoming: 4000,
@@ -45,14 +45,21 @@ const WebSocketService = {
   subscribe: (destination, onMessageCallback) => {
     if (!WebSocketService.stompClient || !WebSocketService.stompClient.connected) {
       console.error('WebSocket is not connected');
-      return;
+      return null;
     }
 
-    WebSocketService.stompClient.subscribe(destination, (message) => {
-      if (onMessageCallback) {
-        onMessageCallback(JSON.parse(message.body));
+    const subscription = WebSocketService.stompClient.subscribe(destination, (message) => {
+      try {
+        const parsedMessage = JSON.parse(message.body);
+        if (onMessageCallback) {
+          onMessageCallback(parsedMessage);
+        }
+      } catch (err) {
+        console.error("Failed to parse WebSocket message:", err, "Raw message:", message.body);
       }
     });
+
+    return subscription;
   },
 
   disconnect: () => {

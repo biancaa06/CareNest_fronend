@@ -14,15 +14,17 @@ function PersonalData({ user }) {
     const [error, setError] = useState("");
 
     useEffect(() => {
+        console.log("Profile Image:", user?.profileImage);
+    
         if (user?.profileImage) {
-            const base64Image = user.profileImage.startsWith("data:image/")
+            const base64Image = user.profileImage.startsWith("data:image")
                 ? user.profileImage
                 : `data:image/jpeg;base64,${user.profileImage}`;
             setProfilePicture(base64Image);
         } else {
             setProfilePicture(null);
         }
-
+    
         if (user?.address) {
             setStreet(user.address.street);
             setNumber(user.address.number);
@@ -30,6 +32,7 @@ function PersonalData({ user }) {
             setCountry(user.address.country);
         }
     }, [user]);
+    
 
     const handleFileChange = (e) => {
         e.preventDefault();
@@ -75,7 +78,7 @@ function PersonalData({ user }) {
     return (
         <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg px-20 py-6 mt-10 text-gray-700">
             <div className="flex flex-col items-center mb-6">
-                {profilePicture ? (
+            {profilePicture ? (
                     <img
                         src={profilePicture}
                         alt="Profile"
