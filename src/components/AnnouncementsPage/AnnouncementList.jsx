@@ -5,7 +5,7 @@ function AnnouncementList({ announcements, claims, handleEditing}) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {announcements && announcements.length > 0 ? ( 
                 announcements.map((announcement) => (
-                    <div key={announcement.id} className="col-span-1">
+                    <div data-cy="announcement-item" key={announcement.id} className="col-span-1">
                         <AnnouncementComponent announcement={announcement} claims = {claims} handleEditing={handleEditing}/>
                     </div>
                 ))

@@ -40,7 +40,7 @@ import Unauthorized_GoToLogin from "../components/authorization/Unauthorized_GoT
 
         return (
             <>
-            <div className="page-background">
+            <div data-cy="profilePage" className="page-background">
             {
                 error?(
                     <p>{error}</p>

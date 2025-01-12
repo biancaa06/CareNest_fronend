@@ -4,7 +4,7 @@ import Logout from './handlers/Logout';
 
 const Navbar = ({ claims, onLogout }) => {
   return (
-    <nav className="bg-green-600 text-white shadow-lg z-50 w-full">
+    <nav id='navbar' data-cy="navbar" className="bg-green-600 text-white shadow-lg z-50 w-full">
       <div className="container mx-auto flex justify-between items-center p-4">
         <Link to="/" className="flex items-center">
           <img
