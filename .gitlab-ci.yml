@@ -15,23 +15,14 @@ build:
 build-docker-image-staging:
   stage: docker_deployment
   script:
-    - |
-      try {
-          docker stop carenest-frontend-staging
-      } catch {
-          Write-Host "Container not running or does not exist."
-      }
-    - |
-      try {
-          docker rm carenest-frontend-staging
-      } catch {
-          Write-Host "Container not found."
-      }
+    # Stop and remove the existing container if it exists
+    - docker stop carenest-frontend-staging || true
+    - docker rm carenest-frontend-staging || true
 
     # Ensure Dockerfile exists
-    - if (!(Dockerfile)) { Write-Error "Dockerfile not found"; exit 1 }
+    - if [ ! -f Dockerfile ]; then echo "Error: Dockerfile not found"; exit 1; fi
 
-    # Build the Docker image for staging
+    # Build the Docker image with the staging environment configuration
     - docker build --build-arg ENV_FILE=$STAGING_ENV_FILE -t carenest-fe:staging .
 
     # Run the container for staging
