@@ -8,7 +8,7 @@ function Logout({onLogout}){
     navigate('/');
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return <button data-cy="logoutButton" onClick={handleLogout}>Logout</button>;
 }
 
 export default Logout

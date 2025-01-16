@@ -20,9 +20,14 @@ function uploadProfilePicture({userId, file}){
     });
 }
 
+function getStatistics(){
+    return api.get('/baseUser/statistics');
+}
+
 export{
     createBaseUser,
     getBaseUserById,
     updateBaseUserAddress,
-    uploadProfilePicture
+    uploadProfilePicture,
+    getStatistics
 }

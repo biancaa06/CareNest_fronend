@@ -4,7 +4,7 @@ import Logout from './handlers/Logout';
 
 const Navbar = ({ claims, onLogout }) => {
   return (
-    <nav className="bg-green-600 text-white shadow-lg z-50 w-full">
+    <nav id='navbar' data-cy="navbar" className="bg-green-600 text-white shadow-lg z-50 w-full">
       <div className="container mx-auto flex justify-between items-center p-4">
         <Link to="/" className="flex items-center">
           <img
@@ -37,6 +37,12 @@ const Navbar = ({ claims, onLogout }) => {
           {claims?.roles?.includes('MANAGER') && (
             <Link to="/sicknesses" className="text-white font-bold hover:bg-green-700 px-4 py-2 rounded">
               <i className="fa-solid fa-bacterium"></i> Sicknesses
+            </Link>
+          )}
+
+          {(claims?.roles?.includes('CARETAKER') || claims?.roles?.includes('PATIENT')) && (
+            <Link to="/messages" className="text-white font-bold hover:bg-green-700 px-4 py-2 rounded">
+              <i className="fas fa-user-cog"></i> Messages
             </Link>
           )}
         </div>
