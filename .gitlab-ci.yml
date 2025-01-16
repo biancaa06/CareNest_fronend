@@ -15,7 +15,7 @@ build-docker-image:
     REACT_APP_BACKEND_URL: "http://localhost:8090"
   script:
     - docker stop carenest-frontend || true && docker rm carenest-frontend || true
-    - docker build --build-arg REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL -t carenest-fe:staging .
+    - docker build --build-arg REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL -t carenest-fe:staging -f ./Dockerfile .
     - docker run --name carenest-frontend -p 5173:5173 -d carenest-fe:staging
   only:
     - main
