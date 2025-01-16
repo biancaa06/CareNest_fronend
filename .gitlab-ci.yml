@@ -1,19 +1,25 @@
 stages:
- - build
- - docker_deployment
+  - build
+  - docker_deployment
+
+variables:
+  STAGING_ENV_FILE: .env.staging
 
 build:
- stage: build
- image: node:20-alpine
- script:
- - npm install
- - npm run build
+  stage: build
+  image: node:20-alpine
+  script:
+    - npm install
+    - npm run build
 
-build-docker-image:
- stage: docker_deployment
- script:
- - docker stop carenest-frontend; if ($?) { docker rm carenest-frontend }
- - docker build -t carenest-fe:dev .
- - docker run --name carenest-frontend -p 5173:5173 -d carenest-fe:dev
- only:
+build-docker-image-staging:
+  stage: docker_deployment
+  script:
+    - docker stop carenest-frontend-staging || true
+    - docker rm carenest-frontend-staging || true
+
+    - docker build --build-arg ENV_FILE=$STAGING_ENV_FILE -t carenest-fe:staging .
+
+    - docker run --name carenest-frontend-staging -p 5174:5173 -d carenest-fe:staging
+  only:
     - main
