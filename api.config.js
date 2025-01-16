@@ -2,7 +2,7 @@ import axios from 'axios';
 import TokenManager from './src/services/TokenManager.jsx';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: import.meta.env.REACT_APP_BACKEND_URL,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -33,7 +33,7 @@ api.interceptors.response.use(
 
                 console.log("Sending refresh token:", refreshToken);
 
-                const response = await axios.post("http://localhost:8080/auth/refresh_token", {
+                const response = await axios.post(`${import.meta.env.REACT_APP_BACKEND_URL}/auth/refresh_token`, {
                     refreshToken,
                 });
 
