@@ -1,35 +1,21 @@
 stages:
-  - build
-  - docker_deployment
-
-variables:
-  REACT_APP_BACKEND_URL: http://localhost:8090
+ - build
+ - test
+ - docker_deployment
 
 build:
-  stage: build
-  image: node:20-alpine
-  script:
-    - npm install
-    - npm run build
-  artifacts:
-    paths:
-      - build/
-      - Dockerfile # Ensure Dockerfile is included as an artifact
-      - .env.staging # Include the staging environment file if needed
+ stage: build
+ image: node:20-alpine
+ script:
+ - npm install
+ - npm run build
 
-build-docker-image-staging:
-  stage: docker_deployment
-  image: docker:latest
-  services:
-    - docker:dind
-  script:
-    - apk add --no-cache bash # Install bash for compatibility with shell syntax
-    - docker stop carenest-frontend-staging || true
-    - docker rm carenest-frontend-staging || true
-    - docker build --build-arg REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL -f Dockerfile -t carenest-fe:staging .
-    - docker run --name carenest-frontend-staging -p 5174:5173 -d carenest-fe:staging
-  artifacts:
-    paths:
-      - Dockerfile # Retain Dockerfile for debug purposes
-  only:
+
+build-docker-image:
+ stage: docker_deployment
+ script:
+ - docker stop carenest-frontend; if ($?) { docker rm carenest-frontend }
+ - docker build -t carenest-fe:dev .
+ - docker run --name carenest-frontend -p 5173:5173 -d carenest-fe:dev
+ only:
     - main
