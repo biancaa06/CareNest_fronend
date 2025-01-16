@@ -26,7 +26,7 @@ build-docker-image-staging:
     - apk add --no-cache bash # Install bash for compatibility with shell syntax
     - docker stop carenest-frontend-staging || true
     - docker rm carenest-frontend-staging || true
-    - docker build --build-arg REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL -t carenest-fe:staging .
+    - docker build --build-arg REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL -f Dockerfile -t carenest-fe:staging .
     - docker run --name carenest-frontend-staging -p 5174:5173 -d carenest-fe:staging
   artifacts:
     paths:
