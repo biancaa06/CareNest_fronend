@@ -4,7 +4,7 @@ import SicknessItem from "./SicknessItem";
 const SicknessesList = ({sicknesses, deleteSickness, updateSickness}) =>{
     return (
         <>
-            <ul className="space-y-4">
+            <ul data-cy='sicknessesList' className="space-y-4">
                 {
                     sicknesses && sicknesses.length > 0 ? (
                         sicknesses.map((sickness) =>(
