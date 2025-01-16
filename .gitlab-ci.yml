@@ -10,7 +10,7 @@ build:
  - npm install
  - npm run build
 
- e2e-tests:
+e2e-tests:
   stage: test
   image: cypress/included:12.16.0
   dependencies:
