@@ -11,6 +11,9 @@ build:
 
 build-docker-image:
   stage: docker_deployment
+  image: docker:latest
+  services:
+    - docker:dind
   variables:
     REACT_APP_BACKEND_URL: "http://localhost:8090"
   script:
