@@ -32,13 +32,14 @@ const Login = ({onLogin}) => {
     <div className="page-background">
       <div className="login-container bg-white shadow-md rounded-lg p-5 max-w-md w-full">
         <h2 className="text-center mb-4 text-green-700">Login to CareNest</h2>
-        <form onSubmit={handleSubmit} noValidate>
+        <form data-cy='loginForm' onSubmit={handleSubmit} noValidate>
           <div className="mb-3">
             <label htmlFor="email" className="form-label text-lg text-gray-700">
               Email Address
             </label>
             <input
               type="email"
+              data-cy="email"
               className="form-control input-field"
               id="email"
               placeholder="Enter your email"
@@ -52,6 +53,7 @@ const Login = ({onLogin}) => {
             </label>
             <input
               type="password"
+              data-cy="password"
               className="form-control input-field"
               id="password"
               placeholder="Enter your password"
@@ -64,7 +66,7 @@ const Login = ({onLogin}) => {
               Forgot your password?
             </a>
           </div>
-          <button type="submit" className="btn btn-success w-80 submit-button">
+          <button type="submit" data-cy="submit" className="btn btn-success w-80 submit-button">
             <i className="fas fa-sign-in-alt"></i> Login
           </button>
           

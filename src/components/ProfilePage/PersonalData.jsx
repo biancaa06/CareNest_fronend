@@ -76,7 +76,7 @@ function PersonalData({ user }) {
     }
 
     return (
-        <div className="max-w-lg mx-auto bg-white shadow-lg rounded-lg px-20 py-6 mt-10 text-gray-700">
+        <div data-cy="personalData" className="max-w-lg mx-auto bg-white shadow-lg rounded-lg px-20 py-6 mt-10 text-gray-700">
             <div className="flex flex-col items-center mb-6">
             {profilePicture ? (
                     <img
@@ -195,6 +195,7 @@ function PersonalData({ user }) {
                     </>
                 ) : (
                     <button
+                        data-cy="editAddressButton"
                         onClick={() => setIsEditing(true)}
                         className="px-4 py-2 bg-green-700 text-white rounded-lg hover:bg-green-800 transition duration-200"
                     >

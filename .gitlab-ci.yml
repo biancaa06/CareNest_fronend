@@ -1,5 +1,6 @@
 stages:
  - build
+ - test
  - docker_deployment
 
 build:
@@ -8,6 +9,19 @@ build:
  script:
  - npm install
  - npm run build
+
+e2e-tests:
+  stage: test
+  image: cypress/included:12.16.0
+  dependencies:
+    - build
+  variables:
+    CYPRESS_BASE_URL: "http://localhost:5173"
+  script:
+    - npm install
+    - npx cypress run
+  only:
+    - main
 
 build-docker-image:
  stage: docker_deployment

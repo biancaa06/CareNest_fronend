@@ -26,6 +26,7 @@ function DeleteSicknessButton({ sickness, deleteSicknessById }) {
     return (
         <>
         <button
+            data-cy='deleteSicknessButton'
             onClick={handleClick}
             data-modal-target="popup-modal" data-modal-toggle="popup-modal"
             className="ml-2 hover:text-red-600 transition-colors duration-200 ease-in-out group-hover:text-[#2e6b34]"
