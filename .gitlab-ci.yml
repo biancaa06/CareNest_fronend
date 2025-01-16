@@ -3,7 +3,6 @@ stages:
   - docker_deployment
 
 variables:
-  STAGING_ENV_FILE: .env.staging
   REACT_APP_BACKEND_URL: http://localhost:8090
 
 build:
@@ -15,6 +14,8 @@ build:
   artifacts:
     paths:
       - build/
+      - Dockerfile # Ensure Dockerfile is included as an artifact
+      - .env.staging # Include the staging environment file if needed
 
 build-docker-image-staging:
   stage: docker_deployment
@@ -22,10 +23,13 @@ build-docker-image-staging:
   services:
     - docker:dind
   script:
+    - apk add --no-cache bash # Install bash for compatibility with shell syntax
     - docker stop carenest-frontend-staging || true
     - docker rm carenest-frontend-staging || true
-
     - docker build --build-arg REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL -t carenest-fe:staging .
     - docker run --name carenest-frontend-staging -p 5174:5173 -d carenest-fe:staging
+  artifacts:
+    paths:
+      - Dockerfile # Retain Dockerfile for debug purposes
   only:
     - main
