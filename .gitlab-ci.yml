@@ -20,7 +20,7 @@ build-docker-image-staging:
     - docker rm carenest-frontend-staging || true
 
     # Check if Dockerfile exists
-    - if [ -f Dockerfile ]; then echo "Dockerfile found"; else echo "Error: Dockerfile not found"; exit 1; fi
+    - test -f Dockerfile && echo "Dockerfile found" || { echo "Error: Dockerfile not found"; exit 1; }
 
     # Build the Docker image with the staging environment configuration
     - docker build --build-arg ENV_FILE=$STAGING_ENV_FILE -t carenest-fe:staging .
