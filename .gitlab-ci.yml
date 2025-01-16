@@ -1,24 +1,19 @@
 stages:
-  - build
-  - docker_deployment
+ - build
+ - docker_deployment
 
 build:
-  stage: build
-  image: node:20-alpine
-  script:
-    - npm install
-    - npm run build -- --mode=staging
+ stage: build
+ image: node:20-alpine
+ script:
+ - npm install
+ - npm run build
 
 build-docker-image:
-  stage: docker_deployment
-  image: docker:latest
-  services:
-    - docker:dind
-  variables:
-    REACT_APP_BACKEND_URL: "http://localhost:8090"
-  script:
-    - docker stop carenest-frontend || true && docker rm carenest-frontend || true
-    - docker build --build-arg REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL -t carenest-fe:staging -f ./Dockerfile .
-    - docker run --name carenest-frontend -p 5173:5173 -d carenest-fe:staging
-  only:
+ stage: docker_deployment
+ script:
+ - docker stop carenest-frontend; if ($?) { docker rm carenest-frontend }
+ - docker build -t carenest-fe:dev .
+ - docker run --name carenest-frontend -p 5173:5173 -d carenest-fe:dev
+ only:
     - main
