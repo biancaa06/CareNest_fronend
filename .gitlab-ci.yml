@@ -15,17 +15,17 @@ build:
 build-docker-image-staging:
   stage: docker_deployment
   script:
-    # Stop and remove the existing container using PowerShell syntax
-    - try { docker stop carenest-frontend-staging } catch {}
-    - try { docker rm carenest-frontend-staging } catch {}
+    # Stop and remove the existing container (PowerShell syntax)
+    - docker stop carenest-frontend-staging -ErrorAction SilentlyContinue
+    - docker rm carenest-frontend-staging -ErrorAction SilentlyContinue
 
-    # Ensure Dockerfile exists in the working directory
+    # Ensure Dockerfile exists
     - if (!(Dockerfile)) { Write-Error "Dockerfile not found"; exit 1 }
 
-    # Build the Docker image with the staging environment
+    # Build the Docker image for staging
     - docker build --build-arg ENV_FILE=$STAGING_ENV_FILE -t carenest-fe:staging .
 
-    # Run the container with the staging configuration
+    # Run the container for staging
     - docker run --name carenest-frontend-staging -p 5174:5173 -d carenest-fe:staging
   only:
     - main
