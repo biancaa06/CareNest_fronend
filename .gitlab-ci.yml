@@ -15,9 +15,18 @@ build:
 build-docker-image-staging:
   stage: docker_deployment
   script:
-    # Stop and remove the existing container (PowerShell syntax)
-    - docker stop carenest-frontend-staging -ErrorAction SilentlyContinue
-    - docker rm carenest-frontend-staging -ErrorAction SilentlyContinue
+    - |
+      try {
+          docker stop carenest-frontend-staging
+      } catch {
+          Write-Host "Container not running or does not exist."
+      }
+    - |
+      try {
+          docker rm carenest-frontend-staging
+      } catch {
+          Write-Host "Container not found."
+      }
 
     # Ensure Dockerfile exists
     - if (!(Dockerfile)) { Write-Error "Dockerfile not found"; exit 1 }
