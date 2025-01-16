@@ -1,6 +1,6 @@
 stages:
  - build
- - e2e-tests
+ - test
  - docker_deployment
 
 build:
